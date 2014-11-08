@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="urls">
+        <item >http://3.bp.blogspot.com/-EWmD65wo81U/T7QquWn-AtI/AAAAAAAAAds/7PUlz-GyaSw/s1600/android-logo.png</item>
+        <item >http://guiaosc.org/wp-content/uploads/2013/08/3570-android.jpg</item>
+        <item >http://www.mejoresaplicacionesandroid.org/wp-content/uploads/2012/09/android-skin-pack-01-535x535.png</item>
+        <item >http://static.elandroidelibre.com/wp-content/uploads/2013/01/hello-android_thumb.png</item>
+        <item >http://www.muylinux.com/wp-content/uploads/2010/08/android-lawsuit.jpg</item>
+        <item >http://i.i.cbsi.com/cnwk.1d/i/tim/2012/06/26/App_Androidevolution_610x426.jpg</item>
+        <item >http://cdn.androidbeat.com/wp-content/uploads/2013/07/android-logo.jpg</item>
+        <item >http://news.iguanahosting.com/wp-content/uploads/2014/01/android-2.jpg</item>
+        <item >http://img.tecnologiapyme.com/2013/03/android-actualizacion.jpg</item>
+        <item >http://www.todoapk.com.ar/wp-content/uploads/2013/06/android_logo_settings-613x460.jpg</item>
+        <item >http://m1.paperblog.com/i/206/2062873/8-mejores-widgets-gratis-utiles-android-2013-L-BtDEKX.jpeg</item>
+        <item >http://www.android.com/kitkat/images/android_mobile.png</item>
+        <item >http://www.dacostabalboa.com/es/imagenes/android-root.jpg</item>
+        <item >http://2.bp.blogspot.com/-nyTsKF68CBA/TybSlNRJq3I/AAAAAAAABIE/W230SOsvqzU/s1600/AndroidDev-2.png</item>
+    </string-array>
+</resources>

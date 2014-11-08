@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Hecho en Nuevo León</string>
+    <string name="title_proveedor_list">Proveedores</string>
+    <string name="title_proveedor_detail">Proveedor Detail</string>
+    <string name="title_articulo_list">Articulos</string>
+    <string name="title_articulo_detail">Articulo Detail</string>
+    <string name="title_activity_carga_informacion">CargaInformacion</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="btnproducto">Productos</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="textView_simple_category_list_item_header">Google</string>
+    <string name="_simple_category_list_item_title">dd</string>
+
+</resources>

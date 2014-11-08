@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<navigationModel
+  ns = "http://schemas.android.com?import=com.android.navigation.*">
+  <locations  
+    class = "java.util.ArrayList">
+    <entry>
+      <key      
+        class = "com.android.navigation.ActivityState"      
+        className = "mx.gob.nl.fragment.ArticuloDetailActivity">
+        <location        
+          id = "point0"        
+          x = "0"        
+          y = "0"/>
+      </key>
+      <value      
+        x = "1440"      
+        y = "3680"      
+        class = "com.android.navigation.Point"/>
+    </entry>
+    <entry>
+      <key      
+        class = "com.android.navigation.MenuState"      
+        xmlResourceName = "carga_informacion">
+        <location        
+          idref = "point0"/>
+      </key>
+      <value      
+        x = "320"      
+        y = "4320"      
+        class = "com.android.navigation.Point"/>
+    </entry>
+    <entry>
+      <key      
+        class = "com.android.navigation.ActivityState"      
+        className = "mx.gob.nl.fragment.ArticuloListActivity">
+        <location        
+          idref = "point0"/>
+      </key>
+      <value      
+        x = "3040"      
+        y = "3680"      
+        class = "com.android.navigation.Point"/>
+    </entry>
+    <entry>
+      <key      
+        class = "com.android.navigation.MenuState"      
+        xmlResourceName = "fragment_demo">
+        <location        
+          idref = "point0"/>
+      </key>
+      <value      
+        x = "160"      
+        y = "4640"      
+        class = "com.android.navigation.Point"/>
+    </entry>
+    <entry>
+      <key      
+        class = "com.android.navigation.ActivityState"      
+        className = "mx.gob.nl.fragment.ProveedorDetailActivity">
+        <location        
+          idref = "point0"/>
+      </key>
+      <value      
+        x = "2560"      
+        y = "2240"      
+        class = "com.android.navigation.Point"/>
+    </entry>
+    <entry>
+      <key      
+        class = "com.android.navigation.ActivityState"      
+        className = "mx.gob.nl.fragment.FragmentDemoActivity">
+        <location        
+          idref = "point0"/>
+      </key>
+      <value      
+        x = "160"      
+        y = "2080"      
+        class = "com.android.navigation.Point"/>
+    </entry>
+    <entry>
+      <key      
+        class = "com.android.navigation.ActivityState"      
+        className = "mx.gob.nl.fragment.CargaActivity">
+        <location        
+          idref = "point0"/>
+      </key>
+      <value      
+        x = "500"      
+        y = "5620"      
+        class = "com.android.navigation.Point"/>
+    </entry>
+    <entry>
+      <key      
+        class = "com.android.navigation.ActivityState"      
+        className = "mx.gob.nl.fragment.CargaInformacion">
+        <location        
+          idref = "point0"/>
+      </key>
+      <value      
+        x = "500"      
+        y = "5620"      
+        class = "com.android.navigation.Point"/>
+    </entry>
+    <entry>
+      <key      
+        class = "com.android.navigation.ActivityState"      
+        className = "mx.gob.nl.fragment.ProveedorListActivity">
+        <location        
+          idref = "point0"/>
+      </key>
+      <value      
+        x = "1440"      
+        y = "2080"      
+        class = "com.android.navigation.Point"/>
+    </entry>
+  </locations>
+</navigationModel>

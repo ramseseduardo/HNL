@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="mx.gob.nl.fragment" >
+
+    <uses-permission android:name="android.permission.INTERNET"/>
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme" >
+        <activity
+            android:name=".CargaInformacion"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".ProveedorListActivity"
+            android:label="@string/title_proveedor_list"
+            android:parentActivityName=".CargaInformacion" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="mx.gob.nl.fragment.CargaInformacion" />
+        </activity>
+        <activity
+            android:name=".ProveedorDetailActivity"
+            android:label="@string/title_proveedor_detail"
+            android:parentActivityName=".ProveedorListActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="mx.gob.nl.fragment.ProveedorListActivity" />
+        </activity>
+        <activity
+            android:name=".ArticuloListActivity"
+            android:label="@string/title_articulo_list"
+            android:parentActivityName=".ProveedorDetailActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="mx.gob.nl.fragment.ProveedorDetailActivity" />
+        </activity>
+        <activity
+            android:name=".ArticuloDetailActivity"
+            android:label="@string/title_articulo_detail"
+            android:parentActivityName=".ArticuloListActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="mx.gob.nl.fragment.ArticuloListActivity" />
+        </activity>
+    </application>
+
+</manifest>
