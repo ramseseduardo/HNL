@@ -30,16 +30,6 @@ public class CargaInformacion extends Activity {
         objText.setAnimation(alphaAnimation);
         Runnable runnable = new Runnable() {
             public void run() {
-                /*long endTime = System.currentTimeMillis() + 20*1000;
-
-                while (System.currentTimeMillis() < endTime) {
-                    synchronized (this) {
-                        try {
-                            wait(endTime -
-                                    System.currentTimeMillis());
-                        } catch (Exception e) {}
-                    }
-                }*/
                 CargaBaseDatos();
                 Message msg = handler.obtainMessage();
                 Bundle bundle = new Bundle();
@@ -58,14 +48,32 @@ public class CargaInformacion extends Activity {
     }
 
     private void CargaBaseDatos() {
-        ISQLControlador objTable,objSubTable;
+        ISQLControlador objTable;
         String sValor1, sValor2 ,sValor3;
         String[] mUrls  = getResources().getStringArray(R.array.urls);
         Random mRandom = new Random();
 
+
         objTable = FactoryTable.getSQLController(FactoryTable.TABLA.PROVEEDORES);
 
-        objTable.abrirBaseDeDatos();
+        objTable.abrirBaseDeDatos(this);
+
+        if(objTable.count() > 0)
+        {
+            objTable.cerrar();
+            long endTime = System.currentTimeMillis() + 3*1000;
+
+                while (System.currentTimeMillis() < endTime) {
+                    synchronized (this) {
+                        try {
+                            wait(endTime -
+                                    System.currentTimeMillis());
+                        } catch (Exception e) {}
+                    }
+             }
+            return;
+        }
+
         //Inserta Proveedor
         for(int i=0;i<300;i++) {
             sValor1 = "Proveedor Nombre " + String.valueOf(i);
@@ -85,7 +93,7 @@ public class CargaInformacion extends Activity {
         objTable.cerrar();
 
         objTable = FactoryTable.getSQLController(FactoryTable.TABLA.PRODUCTOS);
-        objTable.abrirBaseDeDatos();
+        objTable.abrirBaseDeDatos(this);
 
         for(int i=0;i<300;i++) {
             for(int x=0;i<10;i++) {

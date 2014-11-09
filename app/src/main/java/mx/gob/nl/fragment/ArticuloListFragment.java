@@ -96,7 +96,7 @@ public class ArticuloListFragment extends ListFragment {
 
         for(int i = 0; i < 10; i++) {
 
-            mListCategories.add(new ModelList(i,"Item " + i, mUrls[mRandom.nextInt(mUrls.length - 1)]));
+            mListCategories.add(new ModelList(i,"","Item " + i, mUrls[mRandom.nextInt(mUrls.length - 1)]));
         }
 
         mAdapter = new CustomAdapter(getActivity(), mListCategories);

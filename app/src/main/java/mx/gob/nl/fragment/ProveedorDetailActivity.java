@@ -32,7 +32,7 @@ public class ProveedorDetailActivity extends Activity {
     /**
      * The dummy content this fragment is presenting.
      */
-    private ModelList mItem = new ModelList(-1,"","");
+    private ModelList mItem = new ModelList(-1,"","","");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -28,8 +28,8 @@ public class CustomAdapter extends BaseAdapter {
 
         public int id;
         public ImageView logo;
-        public TextView title;
-        public TextView body;
+        public TextView name;
+        public TextView precentacion;
     }
 
     public CustomAdapter(Context context, List<ModelList> items) {
@@ -69,8 +69,8 @@ public class CustomAdapter extends BaseAdapter {
             holder = new ViewHolder();
             holder.id = position;
             holder.logo = (ImageView) convertView.findViewById(R.id.imageView__simple_category_list_item_logo);
-            holder.title = (TextView) convertView.findViewById(R.id.textView__simple_category_list_item_title);
-            holder.body = (TextView) convertView.findViewById(R.id.textView__simple_category_list_item_detail);
+            holder.name = (TextView) convertView.findViewById(R.id.textView__simple_category_list_item_title);
+            holder.precentacion = (TextView) convertView.findViewById(R.id.textView__simple_category_list_item_detail);
             convertView.setTag(holder);
 
         } else {
@@ -78,10 +78,10 @@ public class CustomAdapter extends BaseAdapter {
             holder = (ViewHolder)convertView.getTag();
         }
 
-        Picasso.with(mContext).load(getItem(position).getUrl()).into(holder.logo);
+        Picasso.with(mContext).load(getItem(position).getUrlFoto()).into(holder.logo);
 
-        holder.title.setText(getItem(position).getTitle());
-        holder.body.setText(getItem(position).getTitle());
+        holder.name.setText(getItem(position).getName());
+        holder.precentacion.setText(getItem(position).getPresentacion());
 
         return convertView;
     }

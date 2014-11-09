@@ -1,6 +1,7 @@
 package mx.gob.nl.fragment;
 
 import android.app.Activity;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.app.ListFragment;
 import android.view.View;
@@ -12,6 +13,8 @@ import java.util.List;
 import java.util.Random;
 
 import mx.gob.nl.fragment.adapter.CustomAdapter;
+import mx.gob.nl.fragment.model.FactoryTable;
+import mx.gob.nl.fragment.model.ISQLControlador;
 import mx.gob.nl.fragment.model.ModelList;
 
 /**
@@ -93,14 +96,23 @@ public class ProveedorListFragment extends ListFragment {
     }
 
     private CustomAdapter init() {
+        ISQLControlador objTable;
 
-        mUrls = getResources().getStringArray(R.array.urls);
+        objTable = FactoryTable.getSQLController(FactoryTable.TABLA.PROVEEDORES);
+
+        objTable.abrirBaseDeDatos(getActivity());
+
+        Cursor objCursor = objTable.leer(null);
 
 
-        for(int i = 0; i < 300; i++) {
-
-            mListCategories.add(new ModelList(i,"Item " + i, mUrls[mRandom.nextInt(mUrls.length - 1)]));
+        while (!objCursor.isAfterLast()) {
+            mListCategories.add(new ModelList(objCursor.getInt(0),objCursor.getString(1),objCursor.getString(3),objCursor.getString(19)));
+            objCursor.moveToNext();
         }
+        // make sure to close the cursor
+        objCursor.close();
+
+        objTable.cerrar();
 
         mAdapter = new CustomAdapter(getActivity(), mListCategories);
 

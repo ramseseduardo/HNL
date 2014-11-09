@@ -14,8 +14,8 @@ public class Proveedor implements ISQLControlador  {
     private SQLiteDatabase database;;
 
     @Override
-    public Object abrirBaseDeDatos() throws SQLException {
-        dbhelper = new DBhelper(ApplicationContext.getInstance());
+    public Object abrirBaseDeDatos(Context context) throws SQLException {
+        dbhelper = new DBhelper(context);
         database = dbhelper.getWritableDatabase();
         return this;
     }
@@ -129,5 +129,20 @@ public class Proveedor implements ISQLControlador  {
     public void deleteData(Object[] params) {
         database.delete(DBhelper.TABLE_PROVEEDORES, DBhelper.PROVEEDOR_ID_PROVEEDOR + "="
                 + params[0].toString(), null);
+    }
+
+    @Override
+    public int count()
+    {
+        String query = "Select count(*) FROM " + DBhelper.TABLE_PROVEEDORES;
+        int iReturn = 0;
+
+        Cursor cursor = database.rawQuery(query, null);
+
+        if (cursor.moveToFirst()) {
+            iReturn = cursor.getInt(0);
+        }
+
+        return iReturn;
     }
 }

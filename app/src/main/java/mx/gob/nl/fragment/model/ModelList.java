@@ -6,14 +6,16 @@ package mx.gob.nl.fragment.model;
 public class ModelList {
 
     private int id;
-    private String title;
-    private String url;
+    private String name;
+    private String presentacion;
+    private String urlFoto;
 
-    public ModelList(int id,String title, String url) {
+    public ModelList(int id,String name,String presentacion, String urlFoto) {
         super();
         this.id = id;
-        this.title = title;
-        this.url = url;
+        this.name = name;
+        this.presentacion = presentacion;
+        this.urlFoto = urlFoto;
     }
     public int getId() {
         return id;
@@ -21,16 +23,22 @@ public class ModelList {
     public void setId(int id) {
         this.id = id;
     }
-    public String getTitle() {
-        return title;
+    public String getName() {
+        return name;
     }
-    public void setTitle(String title) {
-        this.title = title;
+    public void setName(String name) {
+        this.name = name;
     }
-    public String getUrl() {
-        return url;
+    public String getPresentacion() {
+        return presentacion;
     }
-    public void setUrl(String url) {
-        this.url = url;
+    public void setPresentacion(String presentacion) {
+        this.presentacion = presentacion;
+    }
+    public String getUrlFoto() {
+        return urlFoto;
+    }
+    public void setUrlFoto(String urlFoto) {
+        this.urlFoto = urlFoto;
     }
 }

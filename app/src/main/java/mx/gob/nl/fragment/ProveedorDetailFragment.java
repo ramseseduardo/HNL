@@ -25,7 +25,7 @@ public class ProveedorDetailFragment extends Fragment {
     /**
      * The dummy content this fragment is presenting.
      */
-    private ModelList mItem = new ModelList(-1,"","");
+    private ModelList mItem = new ModelList(-1,"","","");
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
