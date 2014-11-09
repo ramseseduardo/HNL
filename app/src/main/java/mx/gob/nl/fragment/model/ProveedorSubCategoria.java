@@ -11,12 +11,11 @@ import android.database.sqlite.SQLiteDatabase;
  */
 public class ProveedorSubCategoria implements ISQLControlador  {
     private DBhelper dbhelper;
-    private Context ourcontext;
     private SQLiteDatabase database;
 
     @Override
     public Object abrirBaseDeDatos() throws SQLException {
-        dbhelper = new DBhelper(ourcontext);
+        dbhelper = new DBhelper(ApplicationContext.getInstance());
         database = dbhelper.getWritableDatabase();
         return this;
     }
