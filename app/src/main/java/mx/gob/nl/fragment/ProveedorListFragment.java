@@ -99,7 +99,7 @@ public class ProveedorListFragment extends ListFragment {
 
         for(int i = 0; i < 300; i++) {
 
-            mListCategories.add(new ModelList("Item " + i, mUrls[mRandom.nextInt(mUrls.length - 1)]));
+            mListCategories.add(new ModelList(i,"Item " + i, mUrls[mRandom.nextInt(mUrls.length - 1)]));
         }
 
         mAdapter = new CustomAdapter(getActivity(), mListCategories);
@@ -145,7 +145,7 @@ public class ProveedorListFragment extends ListFragment {
 
         // Notify the active callbacks interface (the activity, if the
         // fragment is attached to one) that an item has been selected.
-        mCallbacks.onItemSelected(mListCategories.get(position).getTitle());
+        mCallbacks.onItemSelected(String.valueOf(mListCategories.get(position).getId()));
     }
 
     @Override

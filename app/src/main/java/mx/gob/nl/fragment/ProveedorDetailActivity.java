@@ -4,9 +4,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.app.Activity;
 
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
+
+import mx.gob.nl.fragment.model.ModelList;
 
 import static android.view.View.OnClickListener;
 
@@ -23,6 +28,11 @@ import static android.view.View.OnClickListener;
 public class ProveedorDetailActivity extends Activity {
 
     Button btnProducto;
+    public static final String ARG_ITEM_ID = "item_id";
+    /**
+     * The dummy content this fragment is presenting.
+     */
+    private ModelList mItem = new ModelList(-1,"","");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,12 +64,29 @@ public class ProveedorDetailActivity extends Activity {
             //        .add(R.id.proveedor_detail_container, fragment)
             //        .commit();
         //}
+
+        if (getIntent().getStringExtra(ProveedorDetailFragment.ARG_ITEM_ID) != null) {
+            // Load the dummy content specified by the fragment
+            // arguments. In a real-world scenario, use a Loader
+            // to load content from a content provider.
+            mItem.setId(Integer.valueOf(getIntent().getStringExtra(ProveedorDetailFragment.ARG_ITEM_ID)));
+        }
+
+        loadData();
         findViewById(R.id.btnproducto).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 ProveedorDetailActivity.this.startActivity(new Intent(ProveedorDetailActivity.this, ArticuloListActivity.class));
             }
         });
+    }
+
+    private void loadData() {
+
+        // Show the dummy content as text in a TextView.
+        if (mItem.getId() != -1) {
+            ((TextView)findViewById(R.id.txtNombre)).setText(String.valueOf(mItem.getId()));
+        }
     }
 
     @Override
@@ -77,4 +104,5 @@ public class ProveedorDetailActivity extends Activity {
         }
         return super.onOptionsItemSelected(item);
     }
+
 }

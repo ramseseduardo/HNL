@@ -16,7 +16,7 @@ public class FactoryTable {
     }
 
 
-    public ISQLControlador getSQLController(TABLA pTabla)
+    public static ISQLControlador getSQLController(TABLA pTabla)
     {
         ISQLControlador objSqlController = null;
 

@@ -26,6 +26,7 @@ public class CustomAdapter extends BaseAdapter {
 
     public class ViewHolder {
 
+        public int id;
         public ImageView logo;
         public TextView title;
         public TextView body;
@@ -66,6 +67,7 @@ public class CustomAdapter extends BaseAdapter {
             convertView = mLayoutInflater.inflate(R.layout.simple_category_list_item, null);
 
             holder = new ViewHolder();
+            holder.id = position;
             holder.logo = (ImageView) convertView.findViewById(R.id.imageView__simple_category_list_item_logo);
             holder.title = (TextView) convertView.findViewById(R.id.textView__simple_category_list_item_title);
             holder.body = (TextView) convertView.findViewById(R.id.textView__simple_category_list_item_detail);

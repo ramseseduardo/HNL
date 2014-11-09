@@ -7,6 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import mx.gob.nl.fragment.model.ModelList;
+
 /**
  * A fragment representing a single Proveedor detail screen.
  * This fragment is either contained in a {@link ProveedorListActivity}
@@ -23,7 +25,7 @@ public class ProveedorDetailFragment extends Fragment {
     /**
      * The dummy content this fragment is presenting.
      */
-    ///////private DummyContent.DummyItem mItem;
+    private ModelList mItem = new ModelList(-1,"","");
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -40,7 +42,7 @@ public class ProveedorDetailFragment extends Fragment {
             // Load the dummy content specified by the fragment
             // arguments. In a real-world scenario, use a Loader
             // to load content from a content provider.
-            /////mItem = DummyContent.ITEM_MAP.get(getArguments().getString(ARG_ITEM_ID));
+            mItem.setId(Integer.valueOf(getArguments().getString(ARG_ITEM_ID)));
         }
     }
 
@@ -50,9 +52,9 @@ public class ProveedorDetailFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_proveedor_detail, container, false);
 
         // Show the dummy content as text in a TextView.
-        //if (mItem != null) {
-        //    ((TextView) rootView.findViewById(R.id.proveedor_detail)).setText(mItem.content);
-        //}
+        if (mItem.getId() != -1) {
+            ((TextView) rootView.findViewById(R.id.txtNombre)).setText(String.valueOf(mItem.getId()));
+        }
 
         return rootView;
     }

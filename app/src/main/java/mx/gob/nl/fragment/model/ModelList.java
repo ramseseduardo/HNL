@@ -5,13 +5,21 @@ package mx.gob.nl.fragment.model;
  */
 public class ModelList {
 
+    private int id;
     private String title;
     private String url;
 
-    public ModelList(String title, String url) {
+    public ModelList(int id,String title, String url) {
         super();
+        this.id = id;
         this.title = title;
         this.url = url;
+    }
+    public int getId() {
+        return id;
+    }
+    public void setId(int id) {
+        this.id = id;
     }
     public String getTitle() {
         return title;

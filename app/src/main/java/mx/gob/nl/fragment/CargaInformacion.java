@@ -3,8 +3,19 @@ package mx.gob.nl.fragment;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.TextView;
+
+import java.util.Random;
+
+import mx.gob.nl.fragment.model.DBhelper;
+import mx.gob.nl.fragment.model.FactoryTable;
+import mx.gob.nl.fragment.model.ISQLControlador;
 
 
 public class CargaInformacion extends Activity {
@@ -14,11 +25,94 @@ public class CargaInformacion extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_carga_informacion);
 
-        Intent objIntent = new Intent(this,ProveedorListActivity.class);
-        startActivity(objIntent);
+        TextView objText = (TextView)findViewById(R.id.txtActualizando);
+        Animation alphaAnimation = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.alpha_animation);
+        objText.setAnimation(alphaAnimation);
+        Runnable runnable = new Runnable() {
+            public void run() {
+                /*long endTime = System.currentTimeMillis() + 20*1000;
+
+                while (System.currentTimeMillis() < endTime) {
+                    synchronized (this) {
+                        try {
+                            wait(endTime -
+                                    System.currentTimeMillis());
+                        } catch (Exception e) {}
+                    }
+                }*/
+                CargaBaseDatos();
+                Message msg = handler.obtainMessage();
+                Bundle bundle = new Bundle();
+                String dateString = "1";
+                bundle.putString("myKey", dateString);
+                msg.setData(bundle);
+
+
+                handler.sendMessage(msg);
+            }
+        };
+        Thread mythread = new Thread(runnable);
+        mythread.start();
+
+
+    }
+
+    private void CargaBaseDatos() {
+        ISQLControlador objTable,objSubTable;
+        String sValor1, sValor2 ,sValor3;
+        String[] mUrls  = getResources().getStringArray(R.array.urls);
+        Random mRandom = new Random();
+
+        objTable = FactoryTable.getSQLController(FactoryTable.TABLA.PROVEEDORES);
+
+        objTable.abrirBaseDeDatos();
+        //Inserta Proveedor
+        for(int i=0;i<300;i++) {
+            sValor1 = "Proveedor Nombre " + String.valueOf(i);
+            sValor2 = "Proveedor de Servicios Generales" + String.valueOf(i);
+            sValor3 = "Servicios Generales " + String.valueOf(i);
+
+            objTable.insertar(new Object[]{
+                    i,sValor1,sValor2,sValor3,"Servicios1","Servicios2"
+                    ,"Servicios3","Tel1","Tel2","https://twitter.com/androidmx",
+                    "https://es-la.facebook.com/AplicacionesAndroid",
+                    "http://www.android.com","ramses_eduardo@icloud.com"
+                    ,1,1,"Colonia","Municipio","Estado","Pais"
+                    ,mUrls[mRandom.nextInt(mUrls.length - 1)]
+                    ,"","2014-10-10","1","1"
+            });
+        }
+        objTable.cerrar();
+
+        objTable = FactoryTable.getSQLController(FactoryTable.TABLA.PRODUCTOS);
+        objTable.abrirBaseDeDatos();
+
+        for(int i=0;i<300;i++) {
+            for(int x=0;i<10;i++) {
+                sValor1 = "Producto Nombre " + String.valueOf(i);
+                sValor2 = "Producto de Servicios Generales" + String.valueOf(i);
+                sValor3 = "Producto Generales " + String.valueOf(i);
+
+                objTable.insertar(new Object[]{x,i,sValor1,sValor2,sValor3,0,0,
+                mUrls[mRandom.nextInt(mUrls.length - 1)],
+                mUrls[mRandom.nextInt(mUrls.length - 1)],
+                mUrls[mRandom.nextInt(mUrls.length - 1)],
+                "2014-10-10",1,1});
+            }
+        }
+        objTable.cerrar();
     }
 
 
+    Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            Bundle bundle = msg.getData();
+            String string = bundle.getString("myKey");
+            Intent objIntent = new Intent(CargaInformacion.this,ProveedorListActivity.class);
+            startActivity(objIntent);
+        }
+    };
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
