@@ -1,6 +1,7 @@
 package mx.gob.nl.fragment;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.app.Activity;
 
@@ -9,8 +10,14 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
+import mx.gob.nl.fragment.model.DBhelper;
+import mx.gob.nl.fragment.model.FactoryTable;
+import mx.gob.nl.fragment.model.ISQLControlador;
 import mx.gob.nl.fragment.model.ModelList;
 
 import static android.view.View.OnClickListener;
@@ -82,10 +89,28 @@ public class ProveedorDetailActivity extends Activity {
     }
 
     private void loadData() {
+        ISQLControlador objTable;
 
         // Show the dummy content as text in a TextView.
         if (mItem.getId() != -1) {
-            ((TextView)findViewById(R.id.txtNombre)).setText(String.valueOf(mItem.getId()));
+            objTable = FactoryTable.getSQLController(FactoryTable.TABLA.PROVEEDORES);
+
+            objTable.abrirBaseDeDatos(this);
+
+            Cursor objCursor = objTable.leer(new String[] {DBhelper.PROVEEDOR_ID_PROVEEDOR + " = " + String.valueOf(mItem.getId())});
+
+            while (!objCursor.isAfterLast()) {
+                ((TextView)findViewById(R.id.txtNombre)).setText(String.valueOf(objCursor.getString(1)));
+                ((TextView)findViewById(R.id.txtDetalle)).setText(String.valueOf(objCursor.getString(3)));
+                ImageView objView = (ImageView)findViewById(R.id.imageView);
+                Picasso.with(this).load(objCursor.getString(19)).into(objView);
+                objCursor.moveToNext();
+            }
+
+            objCursor.close();
+
+            objTable.cerrar();
+
         }
     }
 
