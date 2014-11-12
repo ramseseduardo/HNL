@@ -35,14 +35,14 @@ public class SubCategoria implements ISQLControlador  {
     }
 
     @Override
-    public Cursor leer(String[] params) {
+    public Cursor leer(String selection, String[] selectionArgs) {
         String[] todasLasColumnas = new String[] {
                 DBhelper.SUBCATEGORIA_ID_SUBCATEGORIA,
                 DBhelper.SUBCATEGORIA_DESCRIPCION,
                 DBhelper.SUBCATEGORIA_ID_CATEGORIA
         };
-        Cursor c = database.query(DBhelper.TABLE_SUBCATEGORIA, todasLasColumnas,null,
-                params, null, null, null);
+        Cursor c = database.query(DBhelper.TABLE_SUBCATEGORIA, todasLasColumnas,selection,
+                selectionArgs, null, null, null);
         if (c != null) {
             c.moveToFirst();
         }

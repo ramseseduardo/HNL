@@ -34,13 +34,13 @@ public class Categoria implements ISQLControlador {
     }
 
     @Override
-    public Cursor leer(String[] params) {
+    public Cursor leer(String selection, String[] selectionArgs) {
         String[] todasLasColumnas = new String[] {
                 DBhelper.CATEGORIA_ID_CATEGORIA,
                 DBhelper.CATEGORIA_DESCRIPCION,
         };
-        Cursor c = database.query(DBhelper.TABLE_CATEGORIA, todasLasColumnas,null,
-                params, null, null, null);
+        Cursor c = database.query(DBhelper.TABLE_CATEGORIA, todasLasColumnas,selection,
+                selectionArgs, null, null, null);
         if (c != null) {
             c.moveToFirst();
         }

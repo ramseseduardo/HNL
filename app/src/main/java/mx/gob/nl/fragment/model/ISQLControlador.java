@@ -11,7 +11,7 @@ public interface ISQLControlador{
     public Object abrirBaseDeDatos(Context context) throws SQLException;
     public void cerrar();
     public void insertar(Object[] params);
-    public Cursor leer(String[] params);
+    public Cursor leer(String selection, String[] selectionArgs);
     public int actualizar(Object[] params);
     public void deleteData(Object[] params);
     public int count();

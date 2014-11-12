@@ -97,7 +97,7 @@ public class ProveedorDetailActivity extends Activity {
 
             objTable.abrirBaseDeDatos(this);
 
-            Cursor objCursor = objTable.leer(new String[] {DBhelper.PROVEEDOR_ID_PROVEEDOR + " = " + String.valueOf(mItem.getId())});
+            Cursor objCursor = objTable.leer(DBhelper.PROVEEDOR_ID_PROVEEDOR + " = ?" , new String[] {String.valueOf(mItem.getId())});
 
             while (!objCursor.isAfterLast()) {
                 ((TextView)findViewById(R.id.txtNombre)).setText(String.valueOf(objCursor.getString(1)));

@@ -35,14 +35,14 @@ public class Configuracion implements ISQLControlador  {
     }
 
     @Override
-    public Cursor leer(String[] params) {
+    public Cursor leer(String selection, String[] selectionArgs) {
         String[] todasLasColumnas = new String[] {
                 DBhelper.CONFIGURACION_ID_CONFIGURACION,
                 DBhelper.CONFIGURACION_TIPO,
                 DBhelper.CONFIGURACION_VALOR
         };
-        Cursor c = database.query(DBhelper.TABLE_CONFIGURACION, todasLasColumnas,null,
-                params, null, null, null);
+        Cursor c = database.query(DBhelper.TABLE_CONFIGURACION, todasLasColumnas,selection,
+                selectionArgs, null, null, null);
         if (c != null) {
             c.moveToFirst();
         }

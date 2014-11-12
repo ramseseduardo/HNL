@@ -57,7 +57,7 @@ public class Proveedor implements ISQLControlador  {
     }
 
     @Override
-    public Cursor leer(String[] params) {
+    public Cursor leer(String selection, String[] selectionArgs) {
         String[] todasLasColumnas = new String[] {
                 DBhelper.PROVEEDOR_ID_PROVEEDOR,
                 DBhelper.PROVEEDOR_NOMBRE,
@@ -85,8 +85,8 @@ public class Proveedor implements ISQLControlador  {
                 DBhelper.PROVEEDOR_ACTIVO,
                 DBhelper.PROVEEDOR_ORDEN
         };
-        Cursor c = database.query(DBhelper.TABLE_PROVEEDORES, todasLasColumnas,null,
-                params, null, null, null);
+        Cursor c = database.query(DBhelper.TABLE_PROVEEDORES, todasLasColumnas,selection,
+                selectionArgs, null, null, null);
         if (c != null) {
             c.moveToFirst();
         }

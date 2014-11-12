@@ -41,7 +41,7 @@ public class Actualizacion implements ISQLControlador {
     }
 
     @Override
-    public Cursor leer(String[] params) {
+    public Cursor leer(String selection, String[] selectionArgs) {
         String[] todasLasColumnas = new String[] {
             DBhelper.ACTUALIZACION_ID_ACTUALIZACION,
             DBhelper.ACTUALIZACION_FECHA_ACTUALIZACION,
@@ -53,8 +53,8 @@ public class Actualizacion implements ISQLControlador {
             DBhelper.ACTUALIZACION_TOTALCONFIGURACION,
             DBhelper.ACTUALIZACION_IDIOMA
         };
-        Cursor c = database.query(DBhelper.TABLE_ACTUALIZACION, todasLasColumnas,null,
-                params, null, null, null);
+        Cursor c = database.query(DBhelper.TABLE_ACTUALIZACION, todasLasColumnas,selection,
+                selectionArgs, null, null, null);
         if (c != null) {
             c.moveToFirst();
         }

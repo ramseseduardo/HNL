@@ -102,7 +102,7 @@ public class ProveedorListFragment extends ListFragment {
 
         objTable.abrirBaseDeDatos(getActivity());
 
-        Cursor objCursor = objTable.leer(null);
+        Cursor objCursor = objTable.leer(null,null);
 
 
         while (!objCursor.isAfterLast()) {

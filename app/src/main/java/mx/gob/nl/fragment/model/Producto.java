@@ -45,7 +45,7 @@ public class Producto implements ISQLControlador  {
     }
 
     @Override
-    public Cursor leer(String[] params) {
+    public Cursor leer(String selection, String[] selectionArgs) {
         String[] todasLasColumnas = new String[] {
                 DBhelper.PRODUCTO_ID_PRODUCTO,
                 DBhelper.PRODUCTO_ID_PROVEEDOR,
@@ -61,8 +61,8 @@ public class Producto implements ISQLControlador  {
                 DBhelper.PRODUCTO_ACTIVO,
                 DBhelper.PRODUCTO_ORDEN
         };
-        Cursor c = database.query(DBhelper.TABLE_PRODUCTOS, todasLasColumnas,null,
-                params, null, null, null);
+        Cursor c = database.query(DBhelper.TABLE_PRODUCTOS, todasLasColumnas,selection,
+                selectionArgs, null, null, null);
         if (c != null) {
             c.moveToFirst();
         }

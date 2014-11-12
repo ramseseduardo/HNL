@@ -34,13 +34,13 @@ public class ProveedorSubCategoria implements ISQLControlador  {
     }
 
     @Override
-    public Cursor leer(String[] params) {
+    public Cursor leer(String selection, String[] selectionArgs) {
         String[] todasLasColumnas = new String[] {
                 DBhelper.PROVEEDORSUBCATEGORIA_ID_PROVEEDOR,
                 DBhelper.PROVEEDORSUBCATEGORIA_ID_SUBCATEGORIA
         };
-        Cursor c = database.query(DBhelper.TABLE_PROVEEDORSUBCATEGORIA, todasLasColumnas,null,
-                params, null, null, null);
+        Cursor c = database.query(DBhelper.TABLE_PROVEEDORSUBCATEGORIA, todasLasColumnas,selection,
+                selectionArgs, null, null, null);
         if (c != null) {
             c.moveToFirst();
         }
