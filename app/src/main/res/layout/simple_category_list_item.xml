@@ -49,10 +49,12 @@
             android:layout_column="2"
             android:text="Google"
             android:textColor="#34452f"
-            android:textStyle="bold"
             android:layout_below="@+id/textView__simple_category_list_item_detail"
             android:layout_alignStart="@+id/textView__simple_category_list_item_detail"
-            android:layout_gravity="center_vertical" />
+            android:layout_gravity="center_vertical"
+            android:textStyle="normal"
+            android:textSize="12dp"
+            android:textIsSelectable="false" />
 
     </GridLayout>
 </RelativeLayout>

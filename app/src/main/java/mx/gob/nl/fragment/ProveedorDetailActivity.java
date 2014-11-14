@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.app.Activity;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -72,6 +73,11 @@ public class ProveedorDetailActivity extends Activity {
             //        .commit();
         //}
 
+        if(savedInstanceState != null && savedInstanceState.containsKey(ProveedorDetailFragment.ARG_ITEM_ID)) {
+            mItem.setId(Integer.valueOf((String)savedInstanceState.getCharSequence(ProveedorDetailFragment.ARG_ITEM_ID)));
+        }
+
+
         if (getIntent().getStringExtra(ProveedorDetailFragment.ARG_ITEM_ID) != null) {
             // Load the dummy content specified by the fragment
             // arguments. In a real-world scenario, use a Loader
@@ -83,9 +89,22 @@ public class ProveedorDetailActivity extends Activity {
         findViewById(R.id.btnproducto).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                ProveedorDetailActivity.this.startActivity(new Intent(ProveedorDetailActivity.this, ArticuloListActivity.class));
+                Intent detailIntent = new Intent(ProveedorDetailActivity.this, ArticuloListActivity.class);
+                detailIntent.putExtra(ProveedorDetailFragment.ARG_ITEM_ID,  String.valueOf(mItem.getId()));
+                startActivity(detailIntent);
             }
         });
+    }
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        getIntent().putExtra(ProveedorDetailFragment.ARG_ITEM_ID,  String.valueOf(mItem.getId()));
+        outState.putCharSequence(ProveedorDetailFragment.ARG_ITEM_ID, String.valueOf(mItem.getId()));
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
     }
 
     private void loadData() {

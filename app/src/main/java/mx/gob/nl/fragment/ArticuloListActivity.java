@@ -3,8 +3,9 @@ package mx.gob.nl.fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.app.Activity;
+import android.view.MenuItem;
 
-
+import mx.gob.nl.fragment.model.ModelList;
 
 
 /**
@@ -31,11 +32,23 @@ public class ArticuloListActivity extends Activity
      * device.
      */
     private boolean mTwoPane;
-
+    private ModelList mItem = new ModelList(-1,"","","");
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_articulo_list);
+
+        if(savedInstanceState != null && savedInstanceState.containsKey(ProveedorDetailFragment.ARG_ITEM_ID)) {
+            mItem.setId(Integer.valueOf((String)savedInstanceState.getCharSequence(ProveedorDetailFragment.ARG_ITEM_ID)));
+        }
+
+
+        if (getIntent().getStringExtra(ProveedorDetailFragment.ARG_ITEM_ID) != null) {
+            // Load the dummy content specified by the fragment
+            // arguments. In a real-world scenario, use a Loader
+            // to load content from a content provider.
+            mItem.setId(Integer.valueOf(getIntent().getStringExtra(ProveedorDetailFragment.ARG_ITEM_ID)));
+        }
 
         if (findViewById(R.id.articulo_detail_container) != null) {
             // The detail container view will be present only in the
@@ -79,5 +92,24 @@ public class ArticuloListActivity extends Activity
             detailIntent.putExtra(ArticuloDetailFragment.ARG_ITEM_ID, id);
             startActivity(detailIntent);
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == android.R.id.home) {
+            // This ID represents the Home or Up button. In the case of this
+            // activity, the Up button is shown. For
+            // more details, see the Navigation pattern on Android Design:
+            //
+            // http://developer.android.com/design/patterns/navigation.html#up-vs-back
+            //
+            Intent detailIntent = new Intent(this, ProveedorDetailActivity.class);
+            detailIntent.putExtra(ProveedorDetailFragment.ARG_ITEM_ID,  String.valueOf(mItem.getId()));
+
+            navigateUpTo(detailIntent);
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
