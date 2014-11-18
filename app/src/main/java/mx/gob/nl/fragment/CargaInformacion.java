@@ -96,7 +96,7 @@ public class CargaInformacion extends Activity {
         objTable.abrirBaseDeDatos(this);
 
         for(int i=0;i<300;i++) {
-            for(int x=0;i<10;i++) {
+            for(int x=0;x<10;x++) {
                 sValor1 = "Producto Nombre " + String.valueOf(i);
                 sValor2 = "Producto de Servicios Generales" + String.valueOf(i);
                 sValor3 = "Producto Generales " + String.valueOf(i);

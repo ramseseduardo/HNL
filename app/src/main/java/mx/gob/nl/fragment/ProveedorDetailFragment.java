@@ -1,12 +1,20 @@
 package mx.gob.nl.fragment;
 
+import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
+import mx.gob.nl.fragment.model.DBhelper;
+import mx.gob.nl.fragment.model.FactoryTable;
+import mx.gob.nl.fragment.model.ISQLControlador;
 import mx.gob.nl.fragment.model.ModelList;
 
 /**
@@ -51,11 +59,45 @@ public class ProveedorDetailFragment extends Fragment {
             Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_proveedor_detail, container, false);
 
-        // Show the dummy content as text in a TextView.
-        if (mItem.getId() != -1) {
-            ((TextView) rootView.findViewById(R.id.txtNombre)).setText(String.valueOf(mItem.getId()));
-        }
+
+        loadData(rootView);
+        rootView.findViewById(R.id.btnproducto).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent detailIntent = new Intent(getActivity(), ArticuloListActivity.class);
+                detailIntent.putExtra(ProveedorDetailFragment.ARG_ITEM_ID,  String.valueOf(mItem.getId()));
+                startActivity(detailIntent);
+            }
+        });
 
         return rootView;
     }
+
+    private void loadData(View rootView) {
+        ISQLControlador objTable;
+
+        // Show the dummy content as text in a TextView.
+        if (mItem.getId() != -1) {
+            objTable = FactoryTable.getSQLController(FactoryTable.TABLA.PROVEEDORES);
+
+            objTable.abrirBaseDeDatos(getActivity());
+
+            Cursor objCursor = objTable.leer(DBhelper.PROVEEDOR_ID_PROVEEDOR + " = ?" , new String[] {String.valueOf(mItem.getId())});
+
+            while (!objCursor.isAfterLast()) {
+                ((TextView)rootView.findViewById(R.id.txtNombre)).setText(String.valueOf(objCursor.getString(1)));
+                ((TextView)rootView.findViewById(R.id.txtDetalle)).setText(String.valueOf(objCursor.getString(3)));
+                ImageView objView = (ImageView)rootView.findViewById(R.id.imageView);
+                Picasso.with(getActivity()).load(objCursor.getString(19)).into(objView);
+                objCursor.moveToNext();
+            }
+
+            objCursor.close();
+
+            objTable.cerrar();
+
+        }
+    }
 }
+
+

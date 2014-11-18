@@ -1,10 +1,20 @@
 package mx.gob.nl.fragment;
 
+import android.app.ActionBar;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.app.Activity;
 import android.view.MenuItem;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
+import mx.gob.nl.fragment.model.DBhelper;
+import mx.gob.nl.fragment.model.FactoryTable;
+import mx.gob.nl.fragment.model.ISQLControlador;
 import mx.gob.nl.fragment.model.ModelList;
 
 
@@ -38,16 +48,12 @@ public class ArticuloListActivity extends Activity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_articulo_list);
 
-        if(savedInstanceState != null && savedInstanceState.containsKey(ProveedorDetailFragment.ARG_ITEM_ID)) {
-            mItem.setId(Integer.valueOf((String)savedInstanceState.getCharSequence(ProveedorDetailFragment.ARG_ITEM_ID)));
+        if(savedInstanceState != null && savedInstanceState.containsKey(ArticuloListFragment.ARG_ITEM_ID)) {
+            mItem.setId(Integer.valueOf((String)savedInstanceState.getCharSequence(ArticuloListFragment.ARG_ITEM_ID)));
         }
 
-
-        if (getIntent().getStringExtra(ProveedorDetailFragment.ARG_ITEM_ID) != null) {
-            // Load the dummy content specified by the fragment
-            // arguments. In a real-world scenario, use a Loader
-            // to load content from a content provider.
-            mItem.setId(Integer.valueOf(getIntent().getStringExtra(ProveedorDetailFragment.ARG_ITEM_ID)));
+        if (getIntent().getStringExtra(ArticuloListFragment.ARG_ITEM_ID) != null) {
+            mItem.setId(Integer.valueOf(getIntent().getStringExtra(ArticuloListFragment.ARG_ITEM_ID)));
         }
 
         if (findViewById(R.id.articulo_detail_container) != null) {
@@ -59,14 +65,42 @@ public class ArticuloListActivity extends Activity
 
             // In two-pane mode, list items should be given the
             // 'activated' state when touched.
+            // Create the detail fragment and add it to the activity
             ((ArticuloListFragment) getFragmentManager()
                     .findFragmentById(R.id.articulo_list))
                     .setActivateOnItemClick(true);
         }
 
+        //loadData();
+
         // TODO: If exposing deep links into your app, handle intents here.
     }
 
+    private void loadData() {
+        ISQLControlador objTable;
+
+        // Show the dummy content as text in a TextView.
+        if (mItem.getId() != -1) {
+            objTable = FactoryTable.getSQLController(FactoryTable.TABLA.PRODUCTOS);
+
+            objTable.abrirBaseDeDatos(this);
+
+            Cursor objCursor = objTable.leer(DBhelper.PRODUCTO_ID_PROVEEDOR + " = ?" , new String[] {String.valueOf(mItem.getId())});
+
+            while (!objCursor.isAfterLast()) {
+                ((TextView)findViewById(R.id.txtNombre)).setText(String.valueOf(objCursor.getString(2)));
+                //((TextView)findViewById(R.id.txtDetalle)).setText(String.valueOf(objCursor.getString(3)));
+                ImageView objView = (ImageView)findViewById(R.id.imageView);
+                Picasso.with(this).load(objCursor.getString(19)).into(objView);
+                objCursor.moveToNext();
+            }
+
+            objCursor.close();
+
+            objTable.cerrar();
+
+        }
+    }
     /**
      * Callback method from {@link ArticuloListFragment.Callbacks}
      * indicating that the item with the given ID was selected.
@@ -89,7 +123,7 @@ public class ArticuloListActivity extends Activity
             // In single-pane mode, simply start the detail activity
             // for the selected item ID.
             Intent detailIntent = new Intent(this, ArticuloDetailActivity.class);
-            detailIntent.putExtra(ArticuloDetailFragment.ARG_ITEM_ID, id);
+            detailIntent.putExtra(ArticuloListFragment.ARG_ITEM_ID, id);
             startActivity(detailIntent);
         }
     }
@@ -105,7 +139,7 @@ public class ArticuloListActivity extends Activity
             // http://developer.android.com/design/patterns/navigation.html#up-vs-back
             //
             Intent detailIntent = new Intent(this, ProveedorDetailActivity.class);
-            detailIntent.putExtra(ProveedorDetailFragment.ARG_ITEM_ID,  String.valueOf(mItem.getId()));
+            detailIntent.putExtra(ArticuloListFragment.ARG_ITEM_ID,  String.valueOf(mItem.getId()));
 
             navigateUpTo(detailIntent);
             return true;

@@ -1,6 +1,7 @@
 package mx.gob.nl.fragment;
 
 import android.app.Activity;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.app.ListFragment;
 import android.view.View;
@@ -11,6 +12,9 @@ import java.util.List;
 import java.util.Random;
 
 import mx.gob.nl.fragment.adapter.CustomAdapter;
+import mx.gob.nl.fragment.model.DBhelper;
+import mx.gob.nl.fragment.model.FactoryTable;
+import mx.gob.nl.fragment.model.ISQLControlador;
 import mx.gob.nl.fragment.model.ModelList;
 
 /**
@@ -28,7 +32,11 @@ public class ArticuloListFragment extends ListFragment {
     private List<ModelList> mListCategories = new ArrayList<ModelList>();
     private String[] mUrls = {};
     private Random mRandom = new Random();
-
+    public static final String ARG_ITEM_ID = "item_id";
+    /**
+     * The dummy content this fragment is presenting.
+     */
+    private ModelList mItem = new ModelList(-1,"","","");
     /**
      * The serialization (saved instance state) Bundle key representing the
      * activated item position. Only used on tablets.
@@ -80,24 +88,33 @@ public class ArticuloListFragment extends ListFragment {
         super.onCreate(savedInstanceState);
 
         // TODO: replace with a real list adapter.
-        /*setListAdapter(new ArrayAdapter<DummyContent.DummyItem>(
-                getActivity(),
-                android.R.layout.simple_list_item_activated_1,
-                android.R.id.text1,
-                DummyContent.ITEMS));*/
+
+        if (getActivity().getIntent().getStringExtra(ArticuloListFragment.ARG_ITEM_ID) != null){
+            mItem.setId(Integer.valueOf(getActivity().getIntent().getStringExtra(ArticuloListFragment.ARG_ITEM_ID)));
+        }
 
         setListAdapter(init());
     }
 
     private CustomAdapter init() {
 
-        mUrls = getResources().getStringArray(R.array.urls);
+        ISQLControlador objTable;
+
+        objTable = FactoryTable.getSQLController(FactoryTable.TABLA.PRODUCTOS);
+
+        objTable.abrirBaseDeDatos(getActivity());
+
+        Cursor objCursor = objTable.leer(DBhelper.PRODUCTO_ID_PROVEEDOR + " = ?" , new String[] {String.valueOf(mItem.getId())});
 
 
-        for(int i = 0; i < 10; i++) {
-
-            mListCategories.add(new ModelList(i,"","Item " + i, mUrls[mRandom.nextInt(mUrls.length - 1)]));
+        while (!objCursor.isAfterLast()) {
+            mListCategories.add(new ModelList(objCursor.getInt(0),objCursor.getString(2),objCursor.getString(3),objCursor.getString(7)));
+            objCursor.moveToNext();
         }
+        // make sure to close the cursor
+        objCursor.close();
+
+        objTable.cerrar();
 
         mAdapter = new CustomAdapter(getActivity(), mListCategories);
 
@@ -107,6 +124,8 @@ public class ArticuloListFragment extends ListFragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+
 
         // Restore the previously serialized activated item position.
         if (savedInstanceState != null
