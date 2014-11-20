@@ -81,7 +81,7 @@ public class DBhelper extends SQLiteOpenHelper {
 
     // información del a base de datos
     static final String DB_NAME = "HNL";
-    static final int DB_VERSION = 0;
+    static final int DB_VERSION = 1;
 
     // Información de la base de datos
     private static final String CREATE_ACTUALIZACION = "CREATE TABLE [Actualizacion] ([Id_Actualizacion] INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, [Fecha_Actualizacion] DATETIME, [ControlProveedor] INTEGER, [ControlProductos] INTEGER, [ControlConfiguracion] INTEGER, [TotalProveedor] INTEGER, [TotalProductos] INTEGER, [TotalConfiguracion] INTEGER, [Idioma] VARCHAR (30))";
@@ -89,7 +89,7 @@ public class DBhelper extends SQLiteOpenHelper {
     private static final String CREATE_CATEGORIA = "CREATE TABLE [Categoria] ([Id_Categoria] INTEGER PRIMARY KEY NOT NULL, [Descripcion] VARCHAR (255) NOT NULL)";
     private static final String CREATE_PROVEEDORES = "CREATE TABLE [Proveedores] ([Id_Proveedor] INTEGER PRIMARY KEY NOT NULL UNIQUE, [Nombre] VARCHAR (20) NOT NULL, [Presentacion] VARCHAR (255), [PresentacionCorta] VARCHAR (50), [Servicio1] VARCHAR (50), [Servicio2] VARCHAR (50), [Servicio3] VARCHAR (50), [Telefono1] VARCHAR (14), [Telefono2] VARCHAR (14), [Twiter] VARCHAR (255), [Facebook] VARCHAR (255), [SitioWeb] VARCHAR (255), [Mail] VARCHAR (255), [Calle] VARCHAR (255), [NumeroExterior] VARCHAR (10), [NumeroInterior] VARCHAR (10), [Colonia] VARCHAR (255), [Municipio] VARCHAR (100), [Estado] VARCHAR (50), [Pais] VARCHAR (50), [Foto] VARCHAR (255), [ClaveBusqueda] VARCHAR (255), [Vigencia] DATETIME, [Activo] BOOLEAN DEFAULT(1), [Orden] INTEGER)";
     private static final String CREATE_SUBCATEGORIA = "CREATE TABLE [SubCategoria] ([Id_SubCategoria] INTEGER PRIMARY KEY NOT NULL UNIQUE, [Descripcion] VARCHAR (255) NOT NULL, [Id_Categoria] INTEGER REFERENCES [Categoria] ([Id_Categoria]))";
-    private static final String CREATE_PRODUCTOS = "CREATE TABLE [Productos] ([Id_Producto] INTEGER PRIMARY KEY NOT NULL UNIQUE, [Id_Proveedor] INTEGER REFERENCES [Proveedores] ([Id_Proveedor]), [Nombre] VARCHAR (50), [DescripcionCorta] VARCHAR (50), [Descripcion] VARCHAR (255), [PrecioMenudeo] INTEGER, [PrecioMayoreo] INTEGER, [Foto1] VARCHAR (255), [Foto2] VARCHAR (255), [Foto3] VARCHAR (255), [Vigencia] DATETIME, [Activo] BOOLEAN, [Orden] INTEGER)";
+    private static final String CREATE_PRODUCTOS = "CREATE TABLE [Productos] ([Id_Producto] INTEGER  NOT NULL , [Id_Proveedor] INTEGER NOT NULL REFERENCES [Proveedores] ([Id_Proveedor]), [Nombre] VARCHAR (50), [DescripcionCorta] VARCHAR (50), [Descripcion] VARCHAR (255), [PrecioMenudeo] INTEGER, [PrecioMayoreo] INTEGER, [Foto1] VARCHAR (255), [Foto2] VARCHAR (255), [Foto3] VARCHAR (255), [Vigencia] DATETIME, [Activo] BOOLEAN, [Orden] INTEGER, PRIMARY KEY ([Id_Producto], [Id_Proveedor]))";
     private static final String CREATE_PROVCATEGORIA = "CREATE TABLE [ProveedorCategoria] ([Id_SubCategoria] INTEGER NOT NULL UNIQUE REFERENCES [SubCategoria] ([Id_SubCategoria]), [Id_Proveedor] INTEGER NOT NULL UNIQUE REFERENCES [Proveedores] ([Id_Proveedor]), PRIMARY KEY ([Id_SubCategoria], [Id_Proveedor]))";
 
     public DBhelper(Context context) {
