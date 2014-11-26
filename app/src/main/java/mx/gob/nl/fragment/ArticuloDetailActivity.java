@@ -5,6 +5,11 @@ import android.os.Bundle;
 import android.app.Activity;
 
 import android.view.MenuItem;
+import android.view.MotionEvent;
+import android.widget.ImageView;
+import android.widget.ViewFlipper;
+
+import com.squareup.picasso.Picasso;
 
 
 /**
@@ -18,6 +23,9 @@ import android.view.MenuItem;
  */
 public class ArticuloDetailActivity extends Activity {
 
+    private ViewFlipper viewFlipper;
+    private float lastX;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,6 +33,19 @@ public class ArticuloDetailActivity extends Activity {
 
         // Show the Up button in the action bar.
         getActionBar().setDisplayHomeAsUpEnabled(true);
+
+        String[] objsURL = new String[3];
+
+        objsURL[0] = "http://3.bp.blogspot.com/-EWmD65wo81U/T7QquWn-AtI/AAAAAAAAAds/7PUlz-GyaSw/s1600/android-logo.png";
+        objsURL[1] = "http://guiaosc.org/wp-content/uploads/2013/08/3570-android.jpg";
+        objsURL[2] = "http://www.mejoresaplicacionesandroid.org/wp-content/uploads/2012/09/android-skin-pack-01-535x535.png";
+        ImageView objView1 = (ImageView)findViewById(R.id.imageView1);
+        Picasso.with(this).load(objsURL[0]).into(objView1);
+        ImageView objView2 = (ImageView)findViewById(R.id.imageView2);
+        Picasso.with(this).load(objsURL[1]).into(objView2);
+        ImageView objView3 = (ImageView)findViewById(R.id.imageView3);
+        Picasso.with(this).load(objsURL[2]).into(objView3);
+        viewFlipper = (ViewFlipper) findViewById(R.id.viewFlipper);
 
         // savedInstanceState is non-null when there is fragment state
         // saved from previous configurations of this activity
@@ -49,6 +70,53 @@ public class ArticuloDetailActivity extends Activity {
         //}
     }
 
+    // Method to handle touch event like left to right swap and right to left swap
+    public boolean onTouchEvent(MotionEvent touchevent)
+    {
+        switch (touchevent.getAction())
+        {
+            // when user first touches the screen to swap
+            case MotionEvent.ACTION_DOWN:
+            {
+                lastX = touchevent.getX();
+                break;
+            }
+            case MotionEvent.ACTION_UP:
+            {
+                float currentX = touchevent.getX();
+
+                // if left to right swipe on screen
+                if (lastX < currentX)
+                {
+                    // If no more View/Child to flip
+                    if (viewFlipper.getDisplayedChild() == 0)
+                        break;
+
+                    // set the required Animation type to ViewFlipper
+                    // The Next screen will come in form Left and current Screen will go OUT from Right
+                    viewFlipper.setInAnimation(this, R.anim.in_from_left);
+                    viewFlipper.setOutAnimation(this, R.anim.out_to_right);
+                    // Show the next Screen
+                    viewFlipper.showNext();
+                }
+
+                // if right to left swipe on screen
+                if (lastX > currentX)
+                {
+                    if (viewFlipper.getDisplayedChild() == 1)
+                        break;
+                    // set the required Animation type to ViewFlipper
+                    // The Next screen will come in form Right and current Screen will go OUT from Left
+                    viewFlipper.setInAnimation(this, R.anim.in_from_right);
+                    viewFlipper.setOutAnimation(this, R.anim.out_to_left);
+                    // Show The Previous Screen
+                    viewFlipper.showPrevious();
+                }
+                break;
+            }
+        }
+        return false;
+    }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
