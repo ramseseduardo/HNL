@@ -126,6 +126,7 @@ public class ArticuloListActivity extends Activity
             detailIntent.putExtra(ArticuloListFragment.ARG_ITEM_ID, id);
             startActivity(detailIntent);
         }
+
     }
 
     @Override

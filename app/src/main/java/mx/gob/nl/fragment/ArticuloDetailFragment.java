@@ -5,6 +5,7 @@ import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +26,13 @@ public class ArticuloDetailFragment extends Fragment {
      * The fragment argument representing the item ID that this fragment
      * represents.
      */
+
+    Button btnProducto;
     public static final String ARG_ITEM_ID = "item_id";
+    /**
+     * The dummy content this fragment is presenting.
+     */
+    private ModelList mItem = new ModelList(-1,"","","");
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -42,7 +49,7 @@ public class ArticuloDetailFragment extends Fragment {
             // Load the dummy content specified by the fragment
             // arguments. In a real-world scenario, use a Loader
             // to load content from a content provider.
-            //mItem = DummyContent.ITEM_MAP.get(getArguments().getString(ARG_ITEM_ID));
+            mItem.setId(Integer.valueOf(getArguments().getString(ARG_ITEM_ID)));
         }
     }
 
