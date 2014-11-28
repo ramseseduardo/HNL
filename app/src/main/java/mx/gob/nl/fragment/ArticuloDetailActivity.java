@@ -70,6 +70,17 @@ public class ArticuloDetailActivity extends Activity {
         //}
     }
 
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        getIntent().putExtra(ProveedorDetailFragment.ARG_ITEM_ID,  String.valueOf(mItem.getId()));
+        outState.putCharSequence(ProveedorDetailFragment.ARG_ITEM_ID, String.valueOf(mItem.getId()));
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+    }
     // Method to handle touch event like left to right swap and right to left swap
     public boolean onTouchEvent(MotionEvent touchevent)
     {
