@@ -41,6 +41,8 @@ public class ArticuloListActivity extends Activity
      * Whether or not the activity is in two-pane mode, i.e. running on a tablet
      * device.
      */
+
+    public static final String ARG_ARTICULO_ID = "articulo_id";
     private boolean mTwoPane;
     private ModelList mItem = new ModelList(-1,"","","");
     @Override
@@ -112,7 +114,8 @@ public class ArticuloListActivity extends Activity
             // adding or replacing the detail fragment using a
             // fragment transaction.
             Bundle arguments = new Bundle();
-            arguments.putString(ArticuloDetailFragment.ARG_ITEM_ID, id);
+            arguments.putString(ArticuloListActivity.ARG_ARTICULO_ID, id);
+            arguments.putString(ArticuloDetailFragment.ARG_ITEM_ID, String.valueOf(mItem.getId()));
             ArticuloDetailFragment fragment = new ArticuloDetailFragment();
             fragment.setArguments(arguments);
             getFragmentManager().beginTransaction()
@@ -123,7 +126,8 @@ public class ArticuloListActivity extends Activity
             // In single-pane mode, simply start the detail activity
             // for the selected item ID.
             Intent detailIntent = new Intent(this, ArticuloDetailActivity.class);
-            detailIntent.putExtra(ArticuloListFragment.ARG_ITEM_ID, id);
+            detailIntent.putExtra(ArticuloListActivity.ARG_ARTICULO_ID, id);
+            detailIntent.putExtra(ArticuloDetailFragment.ARG_ITEM_ID, String.valueOf(mItem.getId()));
             startActivity(detailIntent);
         }
 
