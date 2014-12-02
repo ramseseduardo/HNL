@@ -1,15 +1,18 @@
 package mx.gob.nl.fragment;
 
+import android.app.SearchManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.app.Activity;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.SearchView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,14 +38,19 @@ import mx.gob.nl.fragment.model.ModelList;
  * {@link ProveedorListFragment.Callbacks} interface
  * to listen for item selections.
  */
-public class ProveedorListActivity extends Activity
-        implements ProveedorListFragment.Callbacks {
+public class ProveedorListActivity extends Activity implements SearchView.OnQueryTextListener
+        , ProveedorListFragment.Callbacks {
 
     /**
      * Whether or not the activity is in two-pane mode, i.e. running on a tablet
      * device.
      */
     private boolean mTwoPane;
+    private static final String TAG = "SearchViewFilterMode";
+
+    private SearchView mSearchView;
+    private ListView mListView;
+    private ArrayAdapter<String> mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +70,8 @@ public class ProveedorListActivity extends Activity
                     .findFragmentById(R.id.proveedor_list))
                     .setActivateOnItemClick(true);
         }
+
+
         // TODO: If exposing deep links into your app, handle intents here.
     }
     /**
@@ -92,5 +102,42 @@ public class ProveedorListActivity extends Activity
     }
 
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
 
+        //Create the search view
+        /*SearchView searchView = new SearchView(getSupportActionBar().getThemedContext());
+
+        mListView = getListView();
+        mListView.setTextFilterEnabled(true);
+
+        setupSearchView(searchView);
+
+        menu.add(0, 1, 1, null)
+                .setIcon(R.drawable.ic_search)
+                .setActionView(searchView)
+                .setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM | MenuItem.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW);*/
+
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    private void setupSearchView() {
+        mSearchView.setIconifiedByDefault(false);
+        mSearchView.setOnQueryTextListener(this);
+        mSearchView.setSubmitButtonEnabled(false);
+        //mSearchView.setQueryHint(getString(R.string.cheese_hunt_hint));
+    }
+
+    public boolean onQueryTextChange(String newText) {
+        if (TextUtils.isEmpty(newText)) {
+            mListView.clearTextFilter();
+        } else {
+            mListView.setFilterText(newText.toString());
+        }
+        return true;
+    }
+
+    public boolean onQueryTextSubmit(String query) {
+        return false;
+    }
 }
