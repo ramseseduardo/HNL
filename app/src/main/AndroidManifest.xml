@@ -21,13 +21,9 @@
             android:name=".ProveedorListActivity"
             android:label="@string/title_proveedor_list"
             android:parentActivityName=".CargaInformacion" >
-            <intent-filter>
-                <action android:name="android.intent.action.SEARCH" />
-            </intent-filter>
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="mx.gob.nl.fragment.CargaInformacion"
-                android:resource="@xml/searchable"/>
+                android:value="mx.gob.nl.fragment.CargaInformacion"/>
         </activity>
         <activity
             android:name=".ProveedorDetailActivity"

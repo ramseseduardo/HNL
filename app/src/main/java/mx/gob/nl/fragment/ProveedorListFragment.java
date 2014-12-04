@@ -1,11 +1,19 @@
 package mx.gob.nl.fragment;
 
 import android.app.Activity;
+import android.app.LoaderManager;
+import android.content.CursorLoader;
+import android.content.Loader;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.app.ListFragment;
+import android.text.TextUtils;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.widget.ListView;
+import android.widget.SearchView;
+import android.widget.Toast;
 
 
 import java.util.ArrayList;
@@ -26,12 +34,13 @@ import mx.gob.nl.fragment.model.ModelList;
  * Activities containing this fragment MUST implement the {@link Callbacks}
  * interface.
  */
-public class ProveedorListFragment extends ListFragment {
+public class ProveedorListFragment extends ListFragment {  //implements LoaderManager.LoaderCallbacks<Cursor> {
 
     private CustomAdapter mAdapter;
     private List<ModelList> mListCategories = new ArrayList<ModelList>();
     private String[] mUrls = {};
     private Random mRandom = new Random();
+    private String grid_currentQuery = null; // holds the current query...
 
     /**
      * The serialization (saved instance state) Bundle key representing the
@@ -66,11 +75,24 @@ public class ProveedorListFragment extends ListFragment {
      * A dummy implementation of the {@link Callbacks} interface that does
      * nothing. Used only when this fragment is not attached to an activity.
      */
-    private static Callbacks sProveedorCallbacks = new Callbacks() {
-        @Override
-        public void onItemSelected(String id) {
-        }
+     private static Callbacks sProveedorCallbacks = new Callbacks() {
+    @Override
+    public void onItemSelected(String id) {
+    }
     };
+
+
+     @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        setHasOptionsMenu(true);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.searchview_in_menu, menu);
+        SearchView searchView = (SearchView)menu.findItem(R.id.action_search).getActionView();
+        searchView.setOnQueryTextListener(queryListener);
+    }
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -84,13 +106,6 @@ public class ProveedorListFragment extends ListFragment {
         super.onCreate(savedInstanceState);
 
         // TODO: replace with a real list adapter.
-        //setListAdapter(new ArrayAdapter<DummyContent.DummyItem>(
-        //        getActivity(),
-        //        android.R.layout.simple_list_item_activated_1,
-        //        android.R.id.text1,
-        //
-        //       DummyContent.ITEMS));
-
         setListAdapter(init());
 
     }
@@ -160,6 +175,20 @@ public class ProveedorListFragment extends ListFragment {
         mCallbacks.onItemSelected(String.valueOf(mListCategories.get(position).getId()));
     }
 
+    /*@Override
+    public Loader<Cursor> onCreateLoader(int id, Bundle bargs) {
+
+        String sort = "SortColumn ASC";
+        String[] grid_columns = new String[] { "ColumnA", "ColumnB", "Etc..." };
+        String grid_whereClause = "ColumnToSearchBy LIKE ?";
+
+        if (!TextUtils.isEmpty(grid_currentQuery)) {
+            return null;//new CursorLoader(getActivity(), DataProvider.CONTENT_URI, grid_columns, grid_whereClause, new String[] { grid_currentQuery + "%" }, sort);
+        }
+
+        return null;// new CursorLoader(getActivity(), DataProvider.CONTENT_URI, grid_columns, null, null, sort);
+    }*/
+
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
@@ -190,4 +219,27 @@ public class ProveedorListFragment extends ListFragment {
 
         mActivatedPosition = position;
     }
+
+    final private SearchView.OnQueryTextListener queryListener = new SearchView.OnQueryTextListener() {
+
+        @Override
+        public boolean onQueryTextChange(String newText) {
+            if (TextUtils.isEmpty(newText)) {
+                getActivity().getActionBar().setSubtitle("List");
+                grid_currentQuery = null;
+            } else {
+                getActivity().getActionBar().setSubtitle("List - Searching for: " + newText);
+                grid_currentQuery = newText;
+
+            }
+            //getLoaderManager().restartLoader(0, null, ProveedorListFragment.this);
+            return false;
+        }
+
+        @Override
+        public boolean onQueryTextSubmit(String query) {
+            Toast.makeText(getActivity(), "Searching for: " + query + "...", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+    };
 }

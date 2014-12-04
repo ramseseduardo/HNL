@@ -38,8 +38,7 @@ import mx.gob.nl.fragment.model.ModelList;
  * {@link ProveedorListFragment.Callbacks} interface
  * to listen for item selections.
  */
-public class ProveedorListActivity extends Activity implements SearchView.OnQueryTextListener
-        , ProveedorListFragment.Callbacks {
+public class ProveedorListActivity extends Activity implements ProveedorListFragment.Callbacks {
 
     /**
      * Whether or not the activity is in two-pane mode, i.e. running on a tablet
@@ -48,14 +47,11 @@ public class ProveedorListActivity extends Activity implements SearchView.OnQuer
     private boolean mTwoPane;
     private static final String TAG = "SearchViewFilterMode";
 
-    private SearchView mSearchView;
-    private ListView mListView;
-    private ArrayAdapter<String> mAdapter;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_proveedor_list);
+
 
         if (findViewById(R.id.proveedor_detail_container) != null) {
             // The detail container view will be present only in the
@@ -99,45 +95,5 @@ public class ProveedorListActivity extends Activity implements SearchView.OnQuer
             detailIntent.putExtra(ProveedorDetailFragment.ARG_ITEM_ID, id);
             startActivity(detailIntent);
         }
-    }
-
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-
-        //Create the search view
-        /*SearchView searchView = new SearchView(getSupportActionBar().getThemedContext());
-
-        mListView = getListView();
-        mListView.setTextFilterEnabled(true);
-
-        setupSearchView(searchView);
-
-        menu.add(0, 1, 1, null)
-                .setIcon(R.drawable.ic_search)
-                .setActionView(searchView)
-                .setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM | MenuItem.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW);*/
-
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    private void setupSearchView() {
-        mSearchView.setIconifiedByDefault(false);
-        mSearchView.setOnQueryTextListener(this);
-        mSearchView.setSubmitButtonEnabled(false);
-        //mSearchView.setQueryHint(getString(R.string.cheese_hunt_hint));
-    }
-
-    public boolean onQueryTextChange(String newText) {
-        if (TextUtils.isEmpty(newText)) {
-            mListView.clearTextFilter();
-        } else {
-            mListView.setFilterText(newText.toString());
-        }
-        return true;
-    }
-
-    public boolean onQueryTextSubmit(String query) {
-        return false;
     }
 }
