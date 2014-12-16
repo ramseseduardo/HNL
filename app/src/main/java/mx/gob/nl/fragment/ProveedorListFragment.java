@@ -1,20 +1,11 @@
 package mx.gob.nl.fragment;
 
 import android.app.Activity;
-import android.app.LoaderManager;
-import android.content.CursorLoader;
-import android.content.Loader;
+import android.app.ListFragment;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.app.ListFragment;
-import android.text.TextUtils;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.View;
 import android.widget.ListView;
-import android.widget.SearchView;
-import android.widget.Toast;
-
 
 import java.util.ArrayList;
 import java.util.List;
@@ -82,7 +73,7 @@ public class ProveedorListFragment extends ListFragment {  //implements LoaderMa
     };
 
 
-     @Override
+    /* @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         //setHasOptionsMenu(true);
     }
@@ -92,7 +83,7 @@ public class ProveedorListFragment extends ListFragment {  //implements LoaderMa
         inflater.inflate(R.menu.searchview_in_menu, menu);
         SearchView searchView = (SearchView)menu.findItem(R.id.action_search).getActionView();
         searchView.setOnQueryTextListener(queryListener);
-    }
+    }*/
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -220,7 +211,7 @@ public class ProveedorListFragment extends ListFragment {  //implements LoaderMa
         mActivatedPosition = position;
     }
 
-    final private SearchView.OnQueryTextListener queryListener = new SearchView.OnQueryTextListener() {
+    /*final private SearchView.OnQueryTextListener queryListener = new SearchView.OnQueryTextListener() {
 
         @Override
         public boolean onQueryTextChange(String newText) {
@@ -241,5 +232,5 @@ public class ProveedorListFragment extends ListFragment {  //implements LoaderMa
             Toast.makeText(getActivity(), "Searching for: " + query + "...", Toast.LENGTH_SHORT).show();
             return false;
         }
-    };
+    };*/
 }
