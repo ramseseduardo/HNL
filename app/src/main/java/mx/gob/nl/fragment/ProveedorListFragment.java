@@ -84,7 +84,7 @@ public class ProveedorListFragment extends ListFragment {  //implements LoaderMa
 
      @Override
     public void onActivityCreated(Bundle savedInstanceState) {
-        setHasOptionsMenu(true);
+        //setHasOptionsMenu(true);
     }
 
     @Override
