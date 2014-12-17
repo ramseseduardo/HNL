@@ -112,7 +112,7 @@ public class ProveedorListFragment extends ListFragment {  //implements LoaderMa
 
 
         while (!objCursor.isAfterLast()) {
-            mListCategories.add(new ModelList(objCursor.getInt(0),objCursor.getString(1),objCursor.getString(3),objCursor.getString(19)));
+            mListCategories.add(new ModelList(objCursor.getInt(0),objCursor.getString(1),objCursor.getString(3),objCursor.getString(20)));
             objCursor.moveToNext();
         }
         // make sure to close the cursor

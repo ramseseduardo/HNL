@@ -56,6 +56,7 @@ public class Proveedor implements ISQLControlador  {
         database.insert(DBhelper.TABLE_PROVEEDORES, null, cv);
     }
 
+
     @Override
     public Cursor leer(String selection, String[] selectionArgs) {
         String[] todasLasColumnas = new String[] {

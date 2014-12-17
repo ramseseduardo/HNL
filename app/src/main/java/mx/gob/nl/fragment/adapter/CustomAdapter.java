@@ -85,7 +85,8 @@ public class CustomAdapter extends BaseAdapter implements Filterable {
             holder = (ViewHolder)convertView.getTag();
         }
 
-        Picasso.with(mContext).load(getItem(position).getUrlFoto()).into(holder.logo);
+        if(!getItem(position).getUrlFoto().isEmpty())
+         Picasso.with(mContext).load(getItem(position).getUrlFoto()).into(holder.logo);
 
         holder.name.setText(getItem(position).getName());
         holder.precentacion.setText(getItem(position).getPresentacion());

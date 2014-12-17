@@ -18,8 +18,11 @@
             android:id="@+id/txtNombre"
             android:layout_gravity="center"
             android:singleLine="false"
-            android:layout_centerVertical="true"
-            android:layout_alignParentStart="true" />
+            android:layout_marginLeft="10dp"
+            android:textStyle="bold"
+            android:layout_above="@+id/txtDetalle"
+            android:layout_alignParentStart="true"
+            android:layout_marginRight="10dp" />
 
         <TextView
             android:layout_width="match_parent"
@@ -27,9 +30,12 @@
             android:text="New Text"
             android:id="@+id/txtDetalle"
             android:layout_gravity="center_horizontal|bottom"
-            android:layout_above="@+id/btnproducto"
+            android:layout_marginLeft="10dp"
+            android:background="@color/green"
+            android:textStyle="bold"
+            android:layout_above="@+id/space"
             android:layout_alignParentStart="true"
-            android:layout_below="@+id/txtNombre" />
+            android:layout_marginRight="10dp" />
 
         <Button
             android:layout_width="wrap_content"
@@ -38,7 +44,8 @@
             android:id="@+id/btnproducto"
             android:layout_gravity="center_horizontal|bottom"
             android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true" />
+            android:layout_centerHorizontal="true"
+            android:background="@color/green" />
 
         <FrameLayout
             android:layout_width="fill_parent"
@@ -53,6 +60,13 @@
                 android:id="@+id/imageView"
                 android:layout_gravity="center" />
         </FrameLayout>
+
+        <Space
+            android:layout_width="20px"
+            android:layout_height="20px"
+            android:layout_above="@+id/btnproducto"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/space" />
 
     </RelativeLayout>
 

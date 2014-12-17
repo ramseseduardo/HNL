@@ -109,6 +109,8 @@ public class ProveedorDetailActivity extends Activity {
 
     private void loadData() {
         ISQLControlador objTable;
+        String sValores = "";
+        String sDescripcion = "";
 
         // Show the dummy content as text in a TextView.
         if (mItem.getId() != -1) {
@@ -119,10 +121,43 @@ public class ProveedorDetailActivity extends Activity {
             Cursor objCursor = objTable.leer(DBhelper.PROVEEDOR_ID_PROVEEDOR + " = ?" , new String[] {String.valueOf(mItem.getId())});
 
             while (!objCursor.isAfterLast()) {
-                ((TextView)findViewById(R.id.txtNombre)).setText(String.valueOf(objCursor.getString(1)));
-                ((TextView)findViewById(R.id.txtDetalle)).setText(String.valueOf(objCursor.getString(3)));
+                sDescripcion = String.valueOf(objCursor.getString(1)) + "\n";
+                sDescripcion += "\n";
+                sDescripcion +=  "\t" + String.valueOf(objCursor.getString(2));
+
+                ((TextView)findViewById(R.id.txtNombre)).setText(sDescripcion);
+
+                if(!String.valueOf(objCursor.getString(7)).isEmpty() && !String.valueOf(objCursor.getString(8)).isEmpty() )
+                    sValores = "Teléfono: " + String.valueOf(objCursor.getString(7)) + " - " + String.valueOf(objCursor.getString(8)) + "\n";
+                else
+                   {
+                      if (!String.valueOf(objCursor.getString(7)).isEmpty())
+                          sValores = "Teléfono: " + String.valueOf(objCursor.getString(7)) + "\n";
+                      if (!String.valueOf(objCursor.getString(8)).isEmpty())
+                          sValores = "Teléfono: " + String.valueOf(objCursor.getString(8)) + "\n";
+                   }
+
+                if(!String.valueOf(objCursor.getString(9)).isEmpty())
+                    sValores += "Twitter: " + String.valueOf(objCursor.getString(9)) + "\n";
+                if(!String.valueOf(objCursor.getString(10)).isEmpty())
+                    sValores += "Facebook: " + String.valueOf(objCursor.getString(10)) + "\n";
+                if(!String.valueOf(objCursor.getString(11)).isEmpty())
+                    sValores += "Sitio Web: " + String.valueOf(objCursor.getString(11)) + "\n";
+                if(!String.valueOf(objCursor.getString(12)).isEmpty());
+                    sValores += "Mail: " + String.valueOf(objCursor.getString(12)) + "\n";
+                if(!String.valueOf(objCursor.getString(13)).isEmpty())
+                    sValores += "Calle: " + String.valueOf(objCursor.getString(13)) + "\n";
+                if(!String.valueOf(objCursor.getString(14)).isEmpty())
+                    sValores += "Número Exterior: " + String.valueOf(objCursor.getString(14)) + "\n";
+                if(!String.valueOf(objCursor.getString(15)).isEmpty())
+                    sValores += "Número Interior: " + String.valueOf(objCursor.getString(15)) + "\n";
+                if(!String.valueOf(objCursor.getString(16)).isEmpty())
+                    sValores += "Colionia: " + String.valueOf(objCursor.getString(16)) + "\n";
+                if(!String.valueOf(objCursor.getString(17)).isEmpty())
+                    sValores += "Municipio: " + String.valueOf(objCursor.getString(17));
+                ((TextView)findViewById(R.id.txtDetalle)).setText(sValores);
                 ImageView objView = (ImageView)findViewById(R.id.imageView);
-                Picasso.with(this).load(objCursor.getString(19)).into(objView);
+                Picasso.with(this).load(objCursor.getString(20)).into(objView);
                 objCursor.moveToNext();
             }
 
