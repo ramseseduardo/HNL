@@ -22,7 +22,6 @@
         android:contentDescription="@null"
         android:layout_row="1"
         android:layout_alignParentTop="true"
-        android:layout_toStartOf="@+id/gridLayout"
         android:layout_marginRight="22dp"
         android:layout_column="1"
         android:layout_rowSpan="2"
@@ -38,7 +37,6 @@
         android:textColor="#34452f"
         android:textStyle="bold"
         android:layout_below="@+id/textView__simple_category_list_item_detail"
-        android:layout_alignStart="@+id/textView__simple_category_list_item_detail"
         android:layout_gravity="center_vertical" />
 
         <TextView
@@ -50,7 +48,6 @@
             android:text="Google"
             android:textColor="#34452f"
             android:layout_below="@+id/textView__simple_category_list_item_detail"
-            android:layout_alignStart="@+id/textView__simple_category_list_item_detail"
             android:layout_gravity="center_vertical"
             android:textStyle="normal"
             android:textSize="12dp"
