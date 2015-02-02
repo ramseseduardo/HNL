@@ -105,6 +105,7 @@ public class DBhelper extends SQLiteOpenHelper {
         db.execSQL(CREATE_SUBCATEGORIA);
         db.execSQL(CREATE_PRODUCTOS);
         db.execSQL(CREATE_PROVCATEGORIA);
+        WShelper.InsertConfiguracion(db);
      }
 
     @Override

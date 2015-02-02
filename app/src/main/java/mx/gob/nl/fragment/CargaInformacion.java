@@ -2,6 +2,7 @@ package mx.gob.nl.fragment;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -11,11 +12,16 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.Random;
 
-import mx.gob.nl.fragment.model.DBhelper;
 import mx.gob.nl.fragment.model.FactoryTable;
 import mx.gob.nl.fragment.model.ISQLControlador;
+import mx.gob.nl.fragment.model.WebService;
 
 
 public class CargaInformacion extends Activity {
@@ -48,6 +54,70 @@ public class CargaInformacion extends Activity {
     }
 
     private void CargaBaseDatos() {
+        ISQLControlador objTable;
+        Calendar tabla = new GregorianCalendar();
+        Calendar currentDate = new GregorianCalendar();
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        java.util.Date dateTime = null;
+        DateFormat readFormat = new SimpleDateFormat( "EEE MMM d HH:mm:ss zzz yyyy");
+
+        objTable = FactoryTable.getSQLController(FactoryTable.TABLA.ACTUALIZACION);
+
+        objTable.abrirBaseDeDatos(this);
+        SincronizarBaseDeDatos(false);
+        if(objTable.count() == 0)
+        {
+            objTable.cerrar();
+            SincronizarBaseDeDatos(true);
+            return;
+        }
+
+        Cursor objCursor = objTable.leer(null,null);
+
+        while (!objCursor.isAfterLast()) {
+            try {
+                dateTime = readFormat.parse(objCursor.getString(1));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            tabla.setTime(dateTime);
+            if(sdf.format(tabla.getTime()).equals(sdf.format(currentDate.getTime()))) {
+                objTable.cerrar();
+                return;
+            }
+            objCursor.moveToNext();
+        }
+
+        objTable.cerrar();
+        SincronizarBaseDeDatos(false);
+        //Conectar a Servicios
+    }
+
+    private void SincronizarBaseDeDatos(boolean bInitial) {
+
+        ISQLControlador objTable;
+        Calendar currentDate = new GregorianCalendar();
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        java.util.Date dateTime = null;
+        String sURL;
+        String sResult;
+
+        WebService objWService = new WebService();
+        sResult = objWService.OnLineCallWebService(WebService.Service.CATEGORIA);
+
+        objTable = FactoryTable.getSQLController(FactoryTable.TABLA.ACTUALIZACION);
+
+        objTable.abrirBaseDeDatos(this);
+
+        objTable.insertar(new Object[]{
+                currentDate.getTime(), 0, 0, 0, 0, 0, 0, 0
+        });
+
+        objTable.cerrar();
+
+    }
+
+    private void CargaBaseDatos3() {
         ISQLControlador objTable;
         String sValor1, sValor2 ,sValor3;
         int idProducto = 0,idProveedor  = 0;
