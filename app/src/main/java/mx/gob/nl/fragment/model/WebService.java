@@ -37,6 +37,13 @@ public class WebService {
         FOTOS
     }
 
+    public enum Accion
+    {
+        ALL,
+        INSERT,
+        UPDATE
+    }
+
     public String OnLineCallWebService(Service service,String fecha)
     {
         String urlfinal = getURL(service) + "?fecha=" + fecha;
@@ -73,7 +80,7 @@ public class WebService {
 
     private String getURL(Service service) {
 
-        String sResult;
+        String sResult = null;
 
         switch(service)
         {
@@ -101,91 +108,125 @@ public class WebService {
         }
 
 
-        return null;
+        return sResult;
     }
 
-    public Object[][] readJSON(String result) {
+    public Object[][] readJSONToObject() {
+        return readJSONToObject(Accion.ALL);
+    }
+
+    public Object[][] readJSONToObject(Accion objAccion) {
+        return readJSONToObject(sReturn, objAccion);
+    }
+
+    public Object[][] readJSONToObject(String result, Accion objAccion) {
         Object[][] objResult= null;
         try {
-            JSONObject jsonObject = new JSONObject(result);
+            JSONArray jsonArray = new JSONArray(result);
             JSONObject jsonobject;
-            JSONArray jsonarray;
-            JSONArray araycus;
-            String urlvid;
-            JSONObject jsoncustom;
-
+            int iAccion;
             switch(_service)
             {
                 case CATEGORIA:
-                    jsonarray = jsonObject.getJSONArray("");
-
-
-                    for (int i = 0; i < jsonarray.length(); i++) {
+                    objResult = new Object[jsonArray.length()][3];
+                    for (int i = 0; i < jsonArray.length(); i++) {
                         //HashMap<String, String> map = new HashMap<String, String>();
-                        jsonobject = jsonarray.getJSONObject(i);
-                        jsoncustom = jsonobject.getJSONObject("custom_fields");
-                        araycus = jsoncustom.getJSONArray("dp_video_poster");
-                        urlvid = araycus.getString(i);
+                        jsonobject = jsonArray.getJSONObject(i);
+                        iAccion = jsonobject.getInt("Accion");
+                        if((objAccion == Accion.ALL || objAccion == Accion.INSERT) && iAccion==0) {
+                            objResult[i][0] = jsonobject.getString("Id_Categoria");
+                            objResult[i][1] = jsonobject.getString("Descripcion");
+                        }
+
+                        if((objAccion == Accion.ALL || objAccion == Accion.UPDATE) && iAccion==1) {
+                            objResult[i][0] = jsonobject.getString("Id_Categoria");
+                            objResult[i][1] = jsonobject.getString("Descripcion");
+                        }
                     }
                     break;
                 case PRODUCTOS:
-                    jsonarray = jsonObject.getJSONArray("");
-
-                    for (int i = 0; i < jsonarray.length(); i++) {
+                    objResult = new Object[jsonArray.length()][3];
+                    for (int i = 0; i < jsonArray.length(); i++) {
                         //HashMap<String, String> map = new HashMap<String, String>();
-                        jsonobject = jsonarray.getJSONObject(i);
-                        jsoncustom = jsonobject.getJSONObject("custom_fields");
-                        araycus = jsoncustom.getJSONArray("dp_video_poster");
-                        urlvid = araycus.getString(i);
+                        jsonobject = jsonArray.getJSONObject(i);
+                        iAccion = jsonobject.getInt("Accion");
+                        if((objAccion == Accion.ALL || objAccion == Accion.INSERT) && iAccion==0) {
+                            objResult[i][0] = jsonobject.getString("Id_Categoria");
+                            objResult[i][1] = jsonobject.getString("Descripcion");
+                        }
+
+                        if((objAccion == Accion.ALL || objAccion == Accion.UPDATE) && iAccion==1) {
+                            objResult[i][0] = jsonobject.getString("Id_Categoria");
+                            objResult[i][1] = jsonobject.getString("Descripcion");
+                        }
                     }
                     break;
                 case PROVEEDORES:
-                    jsonarray = jsonObject.getJSONArray("");
-
-                    for (int i = 0; i < jsonarray.length(); i++) {
+                    objResult = new Object[jsonArray.length()][3];
+                    for (int i = 0; i < jsonArray.length(); i++) {
                         //HashMap<String, String> map = new HashMap<String, String>();
-                        jsonobject = jsonarray.getJSONObject(i);
+                        jsonobject = jsonArray.getJSONObject(i);
+                        iAccion = jsonobject.getInt("Accion");
+                        if((objAccion == Accion.ALL || objAccion == Accion.INSERT) && iAccion==0) {
+                            objResult[i][0] = jsonobject.getString("Id_Categoria");
+                            objResult[i][1] = jsonobject.getString("Descripcion");
+                        }
 
-                        jsoncustom = jsonobject.getJSONObject("custom_fields");
-                        araycus = jsoncustom.getJSONArray("dp_video_poster");
-                        urlvid = araycus.getString(i);
+                        if((objAccion == Accion.ALL || objAccion == Accion.UPDATE) && iAccion==1) {
+                            objResult[i][0] = jsonobject.getString("Id_Categoria");
+                            objResult[i][1] = jsonobject.getString("Descripcion");
+                        }
                     }
                     break;
                 case PROVEEDORSUBCATEGORIA:
-                    jsonarray = jsonObject.getJSONArray("");
-
-                    for (int i = 0; i < jsonarray.length(); i++) {
+                    objResult = new Object[jsonArray.length()][3];
+                    for (int i = 0; i < jsonArray.length(); i++) {
                         //HashMap<String, String> map = new HashMap<String, String>();
-                        jsonobject = jsonarray.getJSONObject(i);
+                        jsonobject = jsonArray.getJSONObject(i);
+                        iAccion = jsonobject.getInt("Accion");
+                        if((objAccion == Accion.ALL || objAccion == Accion.INSERT) && iAccion==0) {
+                            objResult[i][0] = jsonobject.getString("Id_Categoria");
+                            objResult[i][1] = jsonobject.getString("Descripcion");
+                        }
 
-                        jsoncustom = jsonobject.getJSONObject("custom_fields");
-                        araycus = jsoncustom.getJSONArray("dp_video_poster");
-                        urlvid = araycus.getString(i);
+                        if((objAccion == Accion.ALL || objAccion == Accion.UPDATE) && iAccion==1) {
+                            objResult[i][0] = jsonobject.getString("Id_Categoria");
+                            objResult[i][1] = jsonobject.getString("Descripcion");
+                        }
                     }
                     break;
                 case SUBCATEGORIA:
-
-                    jsonarray = jsonObject.getJSONArray("");
-
-                    for (int i = 0; i < jsonarray.length(); i++) {
+                    objResult = new Object[jsonArray.length()][3];
+                    for (int i = 0; i < jsonArray.length(); i++) {
                         //HashMap<String, String> map = new HashMap<String, String>();
-                        jsonobject = jsonarray.getJSONObject(i);
+                        jsonobject = jsonArray.getJSONObject(i);
+                        iAccion = jsonobject.getInt("Accion");
+                        if((objAccion == Accion.ALL || objAccion == Accion.INSERT) && iAccion==0) {
+                            objResult[i][0] = jsonobject.getString("Id_Categoria");
+                            objResult[i][1] = jsonobject.getString("Descripcion");
+                        }
 
-                        jsoncustom = jsonobject.getJSONObject("custom_fields");
-                        araycus = jsoncustom.getJSONArray("dp_video_poster");
-                        urlvid = araycus.getString(i);
+                        if((objAccion == Accion.ALL || objAccion == Accion.UPDATE) && iAccion==1) {
+                            objResult[i][0] = jsonobject.getString("Id_Categoria");
+                            objResult[i][1] = jsonobject.getString("Descripcion");
+                        }
                     }
                     break;
                 case FOTOS:
-                    jsonarray = jsonObject.getJSONArray("");
-
-                    for (int i = 0; i < jsonarray.length(); i++) {
+                    objResult = new Object[jsonArray.length()][3];
+                    for (int i = 0; i < jsonArray.length(); i++) {
                         //HashMap<String, String> map = new HashMap<String, String>();
-                        jsonobject = jsonarray.getJSONObject(i);
+                        jsonobject = jsonArray.getJSONObject(i);
+                        iAccion = jsonobject.getInt("Accion");
+                        if((objAccion == Accion.ALL || objAccion == Accion.INSERT) && iAccion==0) {
+                            objResult[i][0] = jsonobject.getString("Id_Categoria");
+                            objResult[i][1] = jsonobject.getString("Descripcion");
+                        }
 
-                        jsoncustom = jsonobject.getJSONObject("custom_fields");
-                        araycus = jsoncustom.getJSONArray("dp_video_poster");
-                        urlvid = araycus.getString(i);
+                        if((objAccion == Accion.ALL || objAccion == Accion.UPDATE) && iAccion==1) {
+                            objResult[i][0] = jsonobject.getString("Id_Categoria");
+                            objResult[i][1] = jsonobject.getString("Descripcion");
+                        }
                     }
                     break;
                 default:

@@ -26,6 +26,7 @@ import mx.gob.nl.fragment.model.WebService;
 
 public class CargaInformacion extends Activity {
 
+    Calendar sFechaActualizacion = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -81,6 +82,10 @@ public class CargaInformacion extends Activity {
                 e.printStackTrace();
             }
             tabla.setTime(dateTime);
+
+            if(sFechaActualizacion == null || tabla.getTime().before(sFechaActualizacion.getTime()))
+                sFechaActualizacion = tabla;
+
             if(sdf.format(tabla.getTime()).equals(sdf.format(currentDate.getTime()))) {
                 objTable.cerrar();
                 return;
@@ -93,17 +98,17 @@ public class CargaInformacion extends Activity {
         //Conectar a Servicios
     }
 
-    private void SincronizarBaseDeDatos(boolean bInitial) {
+    private void SincronizarBaseDeDatos(boolean bNueva) {
 
         ISQLControlador objTable;
         Calendar currentDate = new GregorianCalendar();
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-        java.util.Date dateTime = null;
-        String sURL;
-        String sResult;
 
-        WebService objWService = new WebService();
-        sResult = objWService.OnLineCallWebService(WebService.Service.CATEGORIA);
+        InsertUpdateDataBase(FactoryTable.TABLA.CATEGORIA, WebService.Service.CATEGORIA,bNueva);
+        InsertUpdateDataBase(FactoryTable.TABLA.SUBCATEGORIA, WebService.Service.SUBCATEGORIA,bNueva);
+        InsertUpdateDataBase(FactoryTable.TABLA.PROVEEDORES, WebService.Service.PROVEEDORES,bNueva);
+        InsertUpdateDataBase(FactoryTable.TABLA.PRODUCTOS, WebService.Service.PRODUCTOS,bNueva);
+        InsertUpdateDataBase(FactoryTable.TABLA.PROVEEDORSUBCATEGORIA, WebService.Service.PROVEEDORSUBCATEGORIA,bNueva);
+        InsertUpdateDataBase(FactoryTable.TABLA.PROVEEDORES, WebService.Service.FOTOS,bNueva);
 
         objTable = FactoryTable.getSQLController(FactoryTable.TABLA.ACTUALIZACION);
 
@@ -115,6 +120,35 @@ public class CargaInformacion extends Activity {
 
         objTable.cerrar();
 
+    }
+
+    private void InsertUpdateDataBase(FactoryTable.TABLA oTabla,WebService.Service oService,boolean bNueva) {
+        ISQLControlador objTable;
+        Object[][] objResult;
+        objTable = FactoryTable.getSQLController(oTabla);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
+        WebService objWService = new WebService();
+        if(bNueva)
+            objWService.OnLineCallWebService(oService);
+        else
+            objWService.OnLineCallWebService(oService,sdf.format(sFechaActualizacion));
+
+        objResult = objWService.readJSONToObject(WebService.Accion.INSERT);
+
+        objTable.abrirBaseDeDatos(this);
+
+        for(int i=0;i<objResult.length;i++) {
+            objTable.insertar(objResult[i]);
+        }
+
+        objResult = objWService.readJSONToObject(WebService.Accion.UPDATE);
+
+        for(int i=0;i<objResult.length;i++) {
+            objTable.actualizar(objResult[i]);
+        }
+
+        objTable.cerrar();
     }
 
     private void CargaBaseDatos3() {
