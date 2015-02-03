@@ -65,7 +65,6 @@ public class CargaInformacion extends Activity {
         objTable = FactoryTable.getSQLController(FactoryTable.TABLA.ACTUALIZACION);
 
         objTable.abrirBaseDeDatos(this);
-        SincronizarBaseDeDatos(false);
         if(objTable.count() == 0)
         {
             objTable.cerrar();
@@ -104,11 +103,11 @@ public class CargaInformacion extends Activity {
         Calendar currentDate = new GregorianCalendar();
 
         InsertUpdateDataBase(FactoryTable.TABLA.CATEGORIA, WebService.Service.CATEGORIA,bNueva);
-        InsertUpdateDataBase(FactoryTable.TABLA.SUBCATEGORIA, WebService.Service.SUBCATEGORIA,bNueva);
+        //InsertUpdateDataBase(FactoryTable.TABLA.SUBCATEGORIA, WebService.Service.SUBCATEGORIA,bNueva);
         InsertUpdateDataBase(FactoryTable.TABLA.PROVEEDORES, WebService.Service.PROVEEDORES,bNueva);
-        InsertUpdateDataBase(FactoryTable.TABLA.PRODUCTOS, WebService.Service.PRODUCTOS,bNueva);
-        InsertUpdateDataBase(FactoryTable.TABLA.PROVEEDORSUBCATEGORIA, WebService.Service.PROVEEDORSUBCATEGORIA,bNueva);
-        InsertUpdateDataBase(FactoryTable.TABLA.PROVEEDORES, WebService.Service.FOTOS,bNueva);
+        //InsertUpdateDataBase(FactoryTable.TABLA.PRODUCTOS, WebService.Service.PRODUCTOS,bNueva);
+        //InsertUpdateDataBase(FactoryTable.TABLA.PROVEEDORSUBCATEGORIA, WebService.Service.PROVEEDORSUBCATEGORIA,bNueva);
+        //InsertUpdateDataBase(FactoryTable.TABLA.PROVEEDORES, WebService.Service.FOTOS,bNueva);
 
         objTable = FactoryTable.getSQLController(FactoryTable.TABLA.ACTUALIZACION);
 
@@ -125,6 +124,7 @@ public class CargaInformacion extends Activity {
     private void InsertUpdateDataBase(FactoryTable.TABLA oTabla,WebService.Service oService,boolean bNueva) {
         ISQLControlador objTable;
         Object[][] objResult;
+        Object[] objList;
         objTable = FactoryTable.getSQLController(oTabla);
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
@@ -133,19 +133,22 @@ public class CargaInformacion extends Activity {
             objWService.OnLineCallWebService(oService);
         else
             objWService.OnLineCallWebService(oService,sdf.format(sFechaActualizacion));
-
         objResult = objWService.readJSONToObject(WebService.Accion.INSERT);
 
         objTable.abrirBaseDeDatos(this);
 
         for(int i=0;i<objResult.length;i++) {
-            objTable.insertar(objResult[i]);
+            objList = objResult[i];
+            if(objList != null)
+                objTable.insertar(objResult[i]);
         }
 
         objResult = objWService.readJSONToObject(WebService.Accion.UPDATE);
 
         for(int i=0;i<objResult.length;i++) {
-            objTable.actualizar(objResult[i]);
+            objList = objResult[i];
+            if(objList != null)
+                objTable.actualizar(objResult[i]);
         }
 
         objTable.cerrar();

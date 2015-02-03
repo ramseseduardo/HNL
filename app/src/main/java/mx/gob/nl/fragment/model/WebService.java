@@ -17,7 +17,6 @@ import org.json.JSONObject;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-
 /**
  * Created by Ramses on 10/11/14.
  */
@@ -125,113 +124,46 @@ public class WebService {
             JSONArray jsonArray = new JSONArray(result);
             JSONObject jsonobject;
             int iAccion;
+
             switch(_service)
             {
                 case CATEGORIA:
-                    objResult = new Object[jsonArray.length()][3];
-                    for (int i = 0; i < jsonArray.length(); i++) {
-                        //HashMap<String, String> map = new HashMap<String, String>();
-                        jsonobject = jsonArray.getJSONObject(i);
-                        iAccion = jsonobject.getInt("Accion");
-                        if((objAccion == Accion.ALL || objAccion == Accion.INSERT) && iAccion==0) {
-                            objResult[i][0] = jsonobject.getString("Id_Categoria");
-                            objResult[i][1] = jsonobject.getString("Descripcion");
-                        }
-
-                        if((objAccion == Accion.ALL || objAccion == Accion.UPDATE) && iAccion==1) {
-                            objResult[i][0] = jsonobject.getString("Id_Categoria");
-                            objResult[i][1] = jsonobject.getString("Descripcion");
-                        }
-                    }
+                    objResult = new Object[jsonArray.length()][2];
                     break;
                 case PRODUCTOS:
-                    objResult = new Object[jsonArray.length()][3];
-                    for (int i = 0; i < jsonArray.length(); i++) {
-                        //HashMap<String, String> map = new HashMap<String, String>();
-                        jsonobject = jsonArray.getJSONObject(i);
-                        iAccion = jsonobject.getInt("Accion");
-                        if((objAccion == Accion.ALL || objAccion == Accion.INSERT) && iAccion==0) {
-                            objResult[i][0] = jsonobject.getString("Id_Categoria");
-                            objResult[i][1] = jsonobject.getString("Descripcion");
-                        }
-
-                        if((objAccion == Accion.ALL || objAccion == Accion.UPDATE) && iAccion==1) {
-                            objResult[i][0] = jsonobject.getString("Id_Categoria");
-                            objResult[i][1] = jsonobject.getString("Descripcion");
-                        }
-                    }
+                    objResult = new Object[jsonArray.length()][13];
                     break;
                 case PROVEEDORES:
-                    objResult = new Object[jsonArray.length()][3];
-                    for (int i = 0; i < jsonArray.length(); i++) {
-                        //HashMap<String, String> map = new HashMap<String, String>();
-                        jsonobject = jsonArray.getJSONObject(i);
-                        iAccion = jsonobject.getInt("Accion");
-                        if((objAccion == Accion.ALL || objAccion == Accion.INSERT) && iAccion==0) {
-                            objResult[i][0] = jsonobject.getString("Id_Categoria");
-                            objResult[i][1] = jsonobject.getString("Descripcion");
-                        }
-
-                        if((objAccion == Accion.ALL || objAccion == Accion.UPDATE) && iAccion==1) {
-                            objResult[i][0] = jsonobject.getString("Id_Categoria");
-                            objResult[i][1] = jsonobject.getString("Descripcion");
-                        }
-                    }
+                    objResult = new Object[jsonArray.length()][25];
                     break;
                 case PROVEEDORSUBCATEGORIA:
-                    objResult = new Object[jsonArray.length()][3];
-                    for (int i = 0; i < jsonArray.length(); i++) {
-                        //HashMap<String, String> map = new HashMap<String, String>();
-                        jsonobject = jsonArray.getJSONObject(i);
-                        iAccion = jsonobject.getInt("Accion");
-                        if((objAccion == Accion.ALL || objAccion == Accion.INSERT) && iAccion==0) {
-                            objResult[i][0] = jsonobject.getString("Id_Categoria");
-                            objResult[i][1] = jsonobject.getString("Descripcion");
-                        }
-
-                        if((objAccion == Accion.ALL || objAccion == Accion.UPDATE) && iAccion==1) {
-                            objResult[i][0] = jsonobject.getString("Id_Categoria");
-                            objResult[i][1] = jsonobject.getString("Descripcion");
-                        }
-                    }
+                    objResult = new Object[jsonArray.length()][2];
                     break;
                 case SUBCATEGORIA:
                     objResult = new Object[jsonArray.length()][3];
-                    for (int i = 0; i < jsonArray.length(); i++) {
-                        //HashMap<String, String> map = new HashMap<String, String>();
-                        jsonobject = jsonArray.getJSONObject(i);
-                        iAccion = jsonobject.getInt("Accion");
-                        if((objAccion == Accion.ALL || objAccion == Accion.INSERT) && iAccion==0) {
-                            objResult[i][0] = jsonobject.getString("Id_Categoria");
-                            objResult[i][1] = jsonobject.getString("Descripcion");
-                        }
-
-                        if((objAccion == Accion.ALL || objAccion == Accion.UPDATE) && iAccion==1) {
-                            objResult[i][0] = jsonobject.getString("Id_Categoria");
-                            objResult[i][1] = jsonobject.getString("Descripcion");
-                        }
-                    }
                     break;
                 case FOTOS:
-                    objResult = new Object[jsonArray.length()][3];
-                    for (int i = 0; i < jsonArray.length(); i++) {
-                        //HashMap<String, String> map = new HashMap<String, String>();
-                        jsonobject = jsonArray.getJSONObject(i);
-                        iAccion = jsonobject.getInt("Accion");
-                        if((objAccion == Accion.ALL || objAccion == Accion.INSERT) && iAccion==0) {
-                            objResult[i][0] = jsonobject.getString("Id_Categoria");
-                            objResult[i][1] = jsonobject.getString("Descripcion");
-                        }
-
-                        if((objAccion == Accion.ALL || objAccion == Accion.UPDATE) && iAccion==1) {
-                            objResult[i][0] = jsonobject.getString("Id_Categoria");
-                            objResult[i][1] = jsonobject.getString("Descripcion");
-                        }
-                    }
+                    objResult = new Object[jsonArray.length()][2];
                     break;
                 default:
                     break;
+            }
 
+            for (int i = 0; i < jsonArray.length(); i++) {
+                jsonobject = jsonArray.getJSONObject(i);
+                iAccion = jsonobject.getInt("Accion");
+
+                if(objAccion == Accion.ALL) {
+                    setValues(objResult,jsonobject,i,_service);
+                }
+
+                if(objAccion == Accion.INSERT && iAccion==0) {
+                    setValues(objResult,jsonobject,i,_service);
+                }
+
+                if(objAccion == Accion.UPDATE && iAccion==1) {
+                    setValues(objResult,jsonobject,i,_service);
+                }
             }
 
         } catch (Exception e) {
@@ -239,6 +171,92 @@ public class WebService {
         }
 
         return objResult;
+    }
+
+    private void setValues(Object[][] objResult, JSONObject jsonobject, int i,Service service) throws JSONException {
+
+
+        switch(service)
+        {
+            case CATEGORIA:
+                objResult[i][0] = setNull(jsonobject.getString(DBhelper.CATEGORIA_ID_CATEGORIA));
+                objResult[i][1] = setNull(jsonobject.getString(DBhelper.CATEGORIA_DESCRIPCION));
+                break;
+            case PRODUCTOS:
+                objResult[i][0] = setNull(jsonobject.getString(DBhelper.PRODUCTO_ID_PRODUCTO));
+                objResult[i][1] = setNull(jsonobject.getString(DBhelper.PRODUCTO_ID_PROVEEDOR));
+                objResult[i][2] = setNull(jsonobject.getString(DBhelper.PRODUCTO_NOMBRE));
+                objResult[i][3] = setNull(jsonobject.getString(DBhelper.PRODUCTO_DESCRIPCIONCORTA));
+                objResult[i][4] = setNull(jsonobject.getString(DBhelper.PRODUCTO_DESCRIPCION));
+                objResult[i][5] = setNull(jsonobject.getString(DBhelper.PRODUCTO_PRECIOMENUDEO));
+                objResult[i][6] = setNull(jsonobject.getString(DBhelper.PRODUCTO_PRECIOMAYOREO));
+                objResult[i][7] = setNull(jsonobject.getString(DBhelper.PRODUCTO_FOTO1));
+                objResult[i][8] = setNull(jsonobject.getString(DBhelper.PRODUCTO_FOTO2));
+                objResult[i][9] = setNull(jsonobject.getString(DBhelper.PRODUCTO_FOTO3));
+                objResult[i][10] = setNull(jsonobject.getString(DBhelper.PRODUCTO_VIGENCIA));
+                objResult[i][11] = setNull(jsonobject.getString(DBhelper.PRODUCTO_ACTIVO),1);
+                objResult[i][12] = setNull(jsonobject.getString(DBhelper.PRODUCTO_ORDEN),0);
+                break;
+            case PROVEEDORES:
+                objResult[i][0] = setNull(jsonobject.getString(DBhelper.PROVEEDOR_ID_PROVEEDOR));
+                objResult[i][1] = setNull(jsonobject.getString(DBhelper.PROVEEDOR_NOMBRE));
+                objResult[i][2] = setNull(jsonobject.getString(DBhelper.PROVEEDOR_PRESENTACION));
+                objResult[i][3] = setNull(jsonobject.getString(DBhelper.PROVEEDOR_PRESENTACIONCORTA));
+                objResult[i][4] = setNull(jsonobject.getString(DBhelper.PROVEEDOR_SERVICIO1));
+                objResult[i][5] = setNull(jsonobject.getString(DBhelper.PROVEEDOR_SERVICIO2));
+                objResult[i][6] = setNull(jsonobject.getString(DBhelper.PROVEEDOR_SERVICIO3));
+                objResult[i][7] = setNull(jsonobject.getString(DBhelper.PROVEEDOR_TELEFONO1));
+                objResult[i][8] = setNull(jsonobject.getString(DBhelper.PROVEEDOR_TELEFONO2));
+                objResult[i][9] = setNull(jsonobject.getString(DBhelper.PROVEEDOR_TWITER));
+                objResult[i][10] = setNull(jsonobject.getString(DBhelper.PROVEEDOR_FACEBOOK));
+                objResult[i][11] = setNull(jsonobject.getString(DBhelper.PROVEEDOR_SITIOWEB));
+                objResult[i][12] = setNull(jsonobject.getString(DBhelper.PROVEEDOR_MAIL));
+                objResult[i][13] = setNull(jsonobject.getString(DBhelper.PROVEEDOR_CALLE));
+                objResult[i][14] = setNull(jsonobject.getString(DBhelper.PROVEEDOR_NUMEROEXTERIOR));
+                objResult[i][15] = setNull(jsonobject.getString(DBhelper.PROVEEDOR_NUMEROINTERIOR));
+                objResult[i][16] = setNull(jsonobject.getString(DBhelper.PROVEEDOR_COLONIA));
+                objResult[i][17] = setNull(jsonobject.getString(DBhelper.PROVEEDOR_MUNICIPIO));
+                objResult[i][18] = setNull(jsonobject.getString(DBhelper.PROVEEDOR_ESTADO));
+                objResult[i][19] = setNull(jsonobject.getString(DBhelper.PROVEEDOR_PAIS));
+                objResult[i][20] = setNull(jsonobject.getString(DBhelper.PROVEEDOR_FOTO));
+                objResult[i][21] = setNull(jsonobject.getString(DBhelper.PROVEEDOR_CLAVEBUSQUEDA));
+                objResult[i][22] = setNull(jsonobject.getString(DBhelper.PROVEEDOR_VIGENCIA));
+                objResult[i][23] = setNull(jsonobject.getString(DBhelper.PROVEEDOR_ACTIVO),1);
+                objResult[i][24] = setNull(jsonobject.getString(DBhelper.PROVEEDOR_ORDEN),0);
+                break;
+            case PROVEEDORSUBCATEGORIA:
+                objResult[i][0] = setNull(jsonobject.getString(DBhelper.PROVEEDORSUBCATEGORIA_ID_PROVEEDOR));
+                objResult[i][1] = setNull(jsonobject.getString(DBhelper.PROVEEDORSUBCATEGORIA_ID_SUBCATEGORIA));
+                break;
+            case SUBCATEGORIA:
+                objResult[i][0] = setNull(jsonobject.getString(DBhelper.SUBCATEGORIA_ID_SUBCATEGORIA));
+                objResult[i][1] = setNull(jsonobject.getString(DBhelper.SUBCATEGORIA_DESCRIPCION));
+                objResult[i][2] = setNull(jsonobject.getString(DBhelper.SUBCATEGORIA_ID_CATEGORIA));
+                break;
+            case FOTOS:
+                objResult[i][0] = setNull(jsonobject.getString("Id_Producto"));
+                objResult[i][1] = setNull(jsonobject.getString("URL"));
+                break;
+            default:
+                break;
+
+        }
+
+    }
+
+    private Object setNull(Object object) {
+        return setNull(object,"");
+    }
+
+    private Object setNull(Object object,Object oDefault) {
+        Object returnObject = "";
+
+        if(object == null || object == "null" || object == "NULL" || object == "Null")
+            returnObject = oDefault;
+        else
+            returnObject = object;
+
+    return returnObject;
     }
 
     public String readJSONFeed(String URL) {
