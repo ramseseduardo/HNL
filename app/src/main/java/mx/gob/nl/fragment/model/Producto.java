@@ -90,6 +90,30 @@ public class Producto implements ISQLControlador  {
         return i;
     }
 
+    public int actualizarFoto1(Object[] params) {
+        ContentValues cv = new ContentValues();
+        cv.put(DBhelper.PRODUCTO_FOTO1,  params[1].toString());
+        int i = database.update(DBhelper.TABLE_PRODUCTOS, cv,
+                DBhelper.PRODUCTO_ID_PRODUCTO + " = " + params[0].toString(), null);
+        return i;
+    }
+
+    public int actualizarFoto2(Object[] params) {
+        ContentValues cv = new ContentValues();
+        cv.put(DBhelper.PRODUCTO_FOTO2,  params[1].toString());
+        int i = database.update(DBhelper.TABLE_PRODUCTOS, cv,
+                DBhelper.PRODUCTO_ID_PRODUCTO + " = " + params[0].toString(), null);
+        return i;
+    }
+
+    public int actualizarFoto3(Object[] params) {
+        ContentValues cv = new ContentValues();
+        cv.put(DBhelper.PRODUCTO_FOTO3,  params[1].toString());
+        int i = database.update(DBhelper.TABLE_PRODUCTOS, cv,
+                DBhelper.PRODUCTO_ID_PRODUCTO + " = " + params[0].toString(), null);
+        return i;
+    }
+
     @Override
     public void deleteData(Object[] params) {
         database.delete(DBhelper.TABLE_PRODUCTOS, DBhelper.PRODUCTO_ID_PRODUCTO + "="

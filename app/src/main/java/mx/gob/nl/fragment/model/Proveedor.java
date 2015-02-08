@@ -37,7 +37,7 @@ public class Proveedor implements ISQLControlador  {
         cv.put(DBhelper.PROVEEDOR_SERVICIO3,  params[6].toString());
         cv.put(DBhelper.PROVEEDOR_TELEFONO1,  params[7].toString());
         cv.put(DBhelper.PROVEEDOR_TELEFONO2,  params[8].toString());
-        cv.put(DBhelper.PROVEEDOR_TWITER,  params[9].toString());
+        cv.put(DBhelper.PROVEEDOR_TWITTER,  params[9].toString());
         cv.put(DBhelper.PROVEEDOR_FACEBOOK,  params[10].toString());
         cv.put(DBhelper.PROVEEDOR_SITIOWEB,  params[11].toString());
         cv.put(DBhelper.PROVEEDOR_MAIL,  params[12].toString());
@@ -69,7 +69,7 @@ public class Proveedor implements ISQLControlador  {
                 DBhelper.PROVEEDOR_SERVICIO3,
                 DBhelper.PROVEEDOR_TELEFONO1,
                 DBhelper.PROVEEDOR_TELEFONO2,
-                DBhelper.PROVEEDOR_TWITER,
+                DBhelper.PROVEEDOR_TWITTER,
                 DBhelper.PROVEEDOR_FACEBOOK,
                 DBhelper.PROVEEDOR_SITIOWEB,
                 DBhelper.PROVEEDOR_MAIL,
@@ -105,7 +105,7 @@ public class Proveedor implements ISQLControlador  {
         cv.put(DBhelper.PROVEEDOR_SERVICIO3,  params[6].toString());
         cv.put(DBhelper.PROVEEDOR_TELEFONO1,  params[7].toString());
         cv.put(DBhelper.PROVEEDOR_TELEFONO2,  params[8].toString());
-        cv.put(DBhelper.PROVEEDOR_TWITER,  params[9].toString());
+        cv.put(DBhelper.PROVEEDOR_TWITTER,  params[9].toString());
         cv.put(DBhelper.PROVEEDOR_FACEBOOK,  params[10].toString());
         cv.put(DBhelper.PROVEEDOR_SITIOWEB,  params[11].toString());
         cv.put(DBhelper.PROVEEDOR_MAIL,  params[12].toString());

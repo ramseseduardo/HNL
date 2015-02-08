@@ -151,7 +151,11 @@ public class WebService {
 
             for (int i = 0; i < jsonArray.length(); i++) {
                 jsonobject = jsonArray.getJSONObject(i);
-                iAccion = jsonobject.getInt("Accion");
+
+                if(jsonobject.isNull("Accion"))
+                    iAccion=0;
+                else
+                    iAccion = jsonobject.getInt("Accion");
 
                 if(objAccion == Accion.ALL) {
                     setValues(objResult,jsonobject,i,_service);
@@ -179,63 +183,63 @@ public class WebService {
         switch(service)
         {
             case CATEGORIA:
-                objResult[i][0] = setNull(jsonobject.getString(DBhelper.CATEGORIA_ID_CATEGORIA));
-                objResult[i][1] = setNull(jsonobject.getString(DBhelper.CATEGORIA_DESCRIPCION));
+                objResult[i][0] = setNull(jsonobject,DBhelper.CATEGORIA_ID_CATEGORIA);
+                objResult[i][1] = setNull(jsonobject,DBhelper.CATEGORIA_DESCRIPCION);
                 break;
             case PRODUCTOS:
-                objResult[i][0] = setNull(jsonobject.getString(DBhelper.PRODUCTO_ID_PRODUCTO));
-                objResult[i][1] = setNull(jsonobject.getString(DBhelper.PRODUCTO_ID_PROVEEDOR));
-                objResult[i][2] = setNull(jsonobject.getString(DBhelper.PRODUCTO_NOMBRE));
-                objResult[i][3] = setNull(jsonobject.getString(DBhelper.PRODUCTO_DESCRIPCIONCORTA));
-                objResult[i][4] = setNull(jsonobject.getString(DBhelper.PRODUCTO_DESCRIPCION));
-                objResult[i][5] = setNull(jsonobject.getString(DBhelper.PRODUCTO_PRECIOMENUDEO));
-                objResult[i][6] = setNull(jsonobject.getString(DBhelper.PRODUCTO_PRECIOMAYOREO));
-                objResult[i][7] = setNull(jsonobject.getString(DBhelper.PRODUCTO_FOTO1));
-                objResult[i][8] = setNull(jsonobject.getString(DBhelper.PRODUCTO_FOTO2));
-                objResult[i][9] = setNull(jsonobject.getString(DBhelper.PRODUCTO_FOTO3));
-                objResult[i][10] = setNull(jsonobject.getString(DBhelper.PRODUCTO_VIGENCIA));
-                objResult[i][11] = setNull(jsonobject.getString(DBhelper.PRODUCTO_ACTIVO),1);
-                objResult[i][12] = setNull(jsonobject.getString(DBhelper.PRODUCTO_ORDEN),0);
+                objResult[i][0] = setNull(jsonobject,DBhelper.PRODUCTO_ID_PRODUCTO);
+                objResult[i][1] = setNull(jsonobject,DBhelper.PRODUCTO_ID_PROVEEDOR);
+                objResult[i][2] = setNull(jsonobject,DBhelper.PRODUCTO_NOMBRE);
+                objResult[i][3] = setNull(jsonobject,DBhelper.PRODUCTO_DESCRIPCIONCORTA);
+                objResult[i][4] = setNull(jsonobject,DBhelper.PRODUCTO_DESCRIPCION);
+                objResult[i][5] = setNull(jsonobject,DBhelper.PRODUCTO_PRECIOMENUDEO);
+                objResult[i][6] = setNull(jsonobject,DBhelper.PRODUCTO_PRECIOMAYOREO);
+                objResult[i][7] = setNull(jsonobject,DBhelper.PRODUCTO_FOTO1);
+                objResult[i][8] = setNull(jsonobject,DBhelper.PRODUCTO_FOTO2);
+                objResult[i][9] = setNull(jsonobject,DBhelper.PRODUCTO_FOTO3);
+                objResult[i][10] = setNull(jsonobject,DBhelper.PRODUCTO_VIGENCIA);
+                objResult[i][11] = setNull(jsonobject,DBhelper.PRODUCTO_ACTIVO,1);
+                objResult[i][12] = setNull(jsonobject,DBhelper.PRODUCTO_ORDEN,0);
                 break;
             case PROVEEDORES:
-                objResult[i][0] = setNull(jsonobject.getString(DBhelper.PROVEEDOR_ID_PROVEEDOR));
-                objResult[i][1] = setNull(jsonobject.getString(DBhelper.PROVEEDOR_NOMBRE));
-                objResult[i][2] = setNull(jsonobject.getString(DBhelper.PROVEEDOR_PRESENTACION));
-                objResult[i][3] = setNull(jsonobject.getString(DBhelper.PROVEEDOR_PRESENTACIONCORTA));
-                objResult[i][4] = setNull(jsonobject.getString(DBhelper.PROVEEDOR_SERVICIO1));
-                objResult[i][5] = setNull(jsonobject.getString(DBhelper.PROVEEDOR_SERVICIO2));
-                objResult[i][6] = setNull(jsonobject.getString(DBhelper.PROVEEDOR_SERVICIO3));
-                objResult[i][7] = setNull(jsonobject.getString(DBhelper.PROVEEDOR_TELEFONO1));
-                objResult[i][8] = setNull(jsonobject.getString(DBhelper.PROVEEDOR_TELEFONO2));
-                objResult[i][9] = setNull(jsonobject.getString(DBhelper.PROVEEDOR_TWITER));
-                objResult[i][10] = setNull(jsonobject.getString(DBhelper.PROVEEDOR_FACEBOOK));
-                objResult[i][11] = setNull(jsonobject.getString(DBhelper.PROVEEDOR_SITIOWEB));
-                objResult[i][12] = setNull(jsonobject.getString(DBhelper.PROVEEDOR_MAIL));
-                objResult[i][13] = setNull(jsonobject.getString(DBhelper.PROVEEDOR_CALLE));
-                objResult[i][14] = setNull(jsonobject.getString(DBhelper.PROVEEDOR_NUMEROEXTERIOR));
-                objResult[i][15] = setNull(jsonobject.getString(DBhelper.PROVEEDOR_NUMEROINTERIOR));
-                objResult[i][16] = setNull(jsonobject.getString(DBhelper.PROVEEDOR_COLONIA));
-                objResult[i][17] = setNull(jsonobject.getString(DBhelper.PROVEEDOR_MUNICIPIO));
-                objResult[i][18] = setNull(jsonobject.getString(DBhelper.PROVEEDOR_ESTADO));
-                objResult[i][19] = setNull(jsonobject.getString(DBhelper.PROVEEDOR_PAIS));
-                objResult[i][20] = setNull(jsonobject.getString(DBhelper.PROVEEDOR_FOTO));
-                objResult[i][21] = setNull(jsonobject.getString(DBhelper.PROVEEDOR_CLAVEBUSQUEDA));
-                objResult[i][22] = setNull(jsonobject.getString(DBhelper.PROVEEDOR_VIGENCIA));
-                objResult[i][23] = setNull(jsonobject.getString(DBhelper.PROVEEDOR_ACTIVO),1);
-                objResult[i][24] = setNull(jsonobject.getString(DBhelper.PROVEEDOR_ORDEN),0);
+                objResult[i][0] = setNull(jsonobject,DBhelper.PROVEEDOR_ID_PROVEEDOR);
+                objResult[i][1] = setNull(jsonobject,DBhelper.PROVEEDOR_NOMBRE);
+                objResult[i][2] = setNull(jsonobject,DBhelper.PROVEEDOR_PRESENTACION);
+                objResult[i][3] = setNull(jsonobject,DBhelper.PROVEEDOR_PRESENTACIONCORTA);
+                objResult[i][4] = setNull(jsonobject,DBhelper.PROVEEDOR_SERVICIO1);
+                objResult[i][5] = setNull(jsonobject,DBhelper.PROVEEDOR_SERVICIO2);
+                objResult[i][6] = setNull(jsonobject,DBhelper.PROVEEDOR_SERVICIO3);
+                objResult[i][7] = setNull(jsonobject,DBhelper.PROVEEDOR_TELEFONO1);
+                objResult[i][8] = setNull(jsonobject,DBhelper.PROVEEDOR_TELEFONO2);
+                objResult[i][9] = setNull(jsonobject,DBhelper.PROVEEDOR_TWITTER);
+                objResult[i][10] = setNull(jsonobject,DBhelper.PROVEEDOR_FACEBOOK);
+                objResult[i][11] = setNull(jsonobject,DBhelper.PROVEEDOR_SITIOWEB);
+                objResult[i][12] = setNull(jsonobject,DBhelper.PROVEEDOR_MAIL);
+                objResult[i][13] = setNull(jsonobject,DBhelper.PROVEEDOR_CALLE);
+                objResult[i][14] = setNull(jsonobject,DBhelper.PROVEEDOR_NUMEROEXTERIOR);
+                objResult[i][15] = setNull(jsonobject,DBhelper.PROVEEDOR_NUMEROINTERIOR);
+                objResult[i][16] = setNull(jsonobject,DBhelper.PROVEEDOR_COLONIA);
+                objResult[i][17] = setNull(jsonobject,DBhelper.PROVEEDOR_MUNICIPIO);
+                objResult[i][18] = setNull(jsonobject,DBhelper.PROVEEDOR_ESTADO);
+                objResult[i][19] = setNull(jsonobject,DBhelper.PROVEEDOR_PAIS);
+                objResult[i][20] = setNull(jsonobject,DBhelper.PROVEEDOR_FOTO);
+                objResult[i][21] = setNull(jsonobject,DBhelper.PROVEEDOR_CLAVEBUSQUEDA);
+                objResult[i][22] = setNull(jsonobject,DBhelper.PROVEEDOR_VIGENCIA);
+                objResult[i][23] = setNull(jsonobject,DBhelper.PROVEEDOR_ACTIVO,1);
+                objResult[i][24] = setNull(jsonobject,DBhelper.PROVEEDOR_ORDEN,0);
                 break;
             case PROVEEDORSUBCATEGORIA:
-                objResult[i][0] = setNull(jsonobject.getString(DBhelper.PROVEEDORSUBCATEGORIA_ID_PROVEEDOR));
-                objResult[i][1] = setNull(jsonobject.getString(DBhelper.PROVEEDORSUBCATEGORIA_ID_SUBCATEGORIA));
+                objResult[i][0] = setNull(jsonobject,DBhelper.PROVEEDORSUBCATEGORIA_ID_PROVEEDOR);
+                objResult[i][1] = getSubCategorias(jsonobject,DBhelper.PROVEEDORSUBCATEGORIA_ID_SUBCATEGORIA);
                 break;
             case SUBCATEGORIA:
-                objResult[i][0] = setNull(jsonobject.getString(DBhelper.SUBCATEGORIA_ID_SUBCATEGORIA));
-                objResult[i][1] = setNull(jsonobject.getString(DBhelper.SUBCATEGORIA_DESCRIPCION));
-                objResult[i][2] = setNull(jsonobject.getString(DBhelper.SUBCATEGORIA_ID_CATEGORIA));
+                objResult[i][0] = setNull(jsonobject,DBhelper.SUBCATEGORIA_ID_SUBCATEGORIA);
+                objResult[i][1] = setNull(jsonobject,DBhelper.SUBCATEGORIA_DESCRIPCION);
+                objResult[i][2] = setNull(jsonobject,DBhelper.SUBCATEGORIA_ID_CATEGORIA);
                 break;
             case FOTOS:
-                objResult[i][0] = setNull(jsonobject.getString("Id_Producto"));
-                objResult[i][1] = setNull(jsonobject.getString("URL"));
+                objResult[i][0] = setNull(jsonobject,"Id_Producto");
+                objResult[i][1] = setNull(jsonobject,"URL");
                 break;
             default:
                 break;
@@ -244,12 +248,33 @@ public class WebService {
 
     }
 
-    private Object setNull(Object object) {
-        return setNull(object,"");
+    private Object[] getSubCategorias(JSONObject jsonobject,  String sAtributo) throws JSONException {
+        Object[] objResult= null;
+        JSONArray jsonArray;
+
+        jsonArray = jsonobject.getJSONArray(sAtributo);
+
+        objResult = new Object[jsonArray.length()];
+
+        for (int i = 0; i < jsonArray.length(); i++) {
+            objResult[i] = jsonArray.get(i);
+        }
+
+        return objResult;
     }
 
-    private Object setNull(Object object,Object oDefault) {
+    private Object setNull(JSONObject jsonobject, String sAtribute) throws JSONException {
+        return setNull(jsonobject,sAtribute,"");
+    }
+
+    private Object setNull(JSONObject jsonobject, String sAtribute,Object oDefault) throws JSONException {
         Object returnObject = "";
+        Object object = null;
+
+        if(jsonobject.isNull(sAtribute))
+            object = "";
+        else
+            object = jsonobject.getString(sAtribute);
 
         if(object == null || object == "null" || object == "NULL" || object == "Null")
             returnObject = oDefault;

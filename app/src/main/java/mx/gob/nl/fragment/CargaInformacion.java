@@ -21,6 +21,8 @@ import java.util.Random;
 
 import mx.gob.nl.fragment.model.FactoryTable;
 import mx.gob.nl.fragment.model.ISQLControlador;
+import mx.gob.nl.fragment.model.Producto;
+import mx.gob.nl.fragment.model.ProveedorSubCategoria;
 import mx.gob.nl.fragment.model.WebService;
 
 
@@ -103,11 +105,11 @@ public class CargaInformacion extends Activity {
         Calendar currentDate = new GregorianCalendar();
 
         InsertUpdateDataBase(FactoryTable.TABLA.CATEGORIA, WebService.Service.CATEGORIA,bNueva);
-        //InsertUpdateDataBase(FactoryTable.TABLA.SUBCATEGORIA, WebService.Service.SUBCATEGORIA,bNueva);
+        InsertUpdateDataBase(FactoryTable.TABLA.SUBCATEGORIA, WebService.Service.SUBCATEGORIA,bNueva);
         InsertUpdateDataBase(FactoryTable.TABLA.PROVEEDORES, WebService.Service.PROVEEDORES,bNueva);
-        //InsertUpdateDataBase(FactoryTable.TABLA.PRODUCTOS, WebService.Service.PRODUCTOS,bNueva);
-        //InsertUpdateDataBase(FactoryTable.TABLA.PROVEEDORSUBCATEGORIA, WebService.Service.PROVEEDORSUBCATEGORIA,bNueva);
-        //InsertUpdateDataBase(FactoryTable.TABLA.PROVEEDORES, WebService.Service.FOTOS,bNueva);
+        InsertUpdateDataBase(FactoryTable.TABLA.PRODUCTOS, WebService.Service.PRODUCTOS,bNueva);
+        InsertUpdateProveedorSubCategoriaDataBase(bNueva);
+        //InsertUpdateFotoDataBase(bNueva);
 
         objTable = FactoryTable.getSQLController(FactoryTable.TABLA.ACTUALIZACION);
 
@@ -119,6 +121,98 @@ public class CargaInformacion extends Activity {
 
         objTable.cerrar();
 
+    }
+
+    private void InsertUpdateProveedorSubCategoriaDataBase(boolean bNueva) {
+        ISQLControlador objTable;
+        Object[][] objResult;
+        Object[] objList = new Object[1];
+        Object[] oInsert = new Object[2];
+        objTable = FactoryTable.getSQLController(FactoryTable.TABLA.PROVEEDORSUBCATEGORIA);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
+        WebService objWService = new WebService();
+        if(bNueva)
+            objWService.OnLineCallWebService( WebService.Service.PROVEEDORSUBCATEGORIA);
+        else
+            objWService.OnLineCallWebService(WebService.Service.PROVEEDORSUBCATEGORIA,sdf.format(sFechaActualizacion));
+
+
+        objResult = objWService.readJSONToObject(WebService.Accion.ALL);
+
+        objTable.abrirBaseDeDatos(this);
+
+        for(int i=0;i<objResult.length;i++) {
+            objList = objResult[i];
+            if(objList[0] != null)
+                ((ProveedorSubCategoria)objTable).deleteProveedor(objList);
+        }
+
+        for(int i=0;i<objResult.length;i++) {
+            oInsert[0] = objResult[i];
+            objList = objResult[1];
+            if(objList.length > 0 && objList[1] != null)
+                for(int x=0;x<objList.length;x++) {
+                    oInsert[1] = String.valueOf(objList[x]);
+                    objTable.insertar(oInsert);
+                }
+        }
+
+        objTable.cerrar();
+    }
+
+    private void InsertUpdateFotoDataBase(boolean bNueva) {
+
+        ISQLControlador objTable;
+        Object[][] objResult;
+        Object[] objList = new Object[1];
+        objTable = FactoryTable.getSQLController(FactoryTable.TABLA.PRODUCTOS);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        int iCount = 0;
+        int iProducto = 0;
+        int iAntProducto = 0;
+
+        WebService objWService = new WebService();
+        if(bNueva)
+            objWService.OnLineCallWebService( WebService.Service.FOTOS);
+        else
+            objWService.OnLineCallWebService(WebService.Service.FOTOS,sdf.format(sFechaActualizacion));
+
+
+        objResult = objWService.readJSONToObject(WebService.Accion.ALL);
+
+        objTable.abrirBaseDeDatos(this);
+
+        for(int i=0;i<objResult.length;i++) {
+            iProducto = Integer.getInteger(String.valueOf(objResult[i][0]));
+
+            if(iProducto != iAntProducto) {
+                iCount = 1;
+                iAntProducto = iProducto;
+            }
+            else
+                iCount++;
+
+            objList = objResult[i];
+
+            if(objList[0] != null)
+                switch (iCount) {
+                    case 1:
+                        ((Producto) objTable).actualizarFoto1(objList);
+                        break;
+                    case 2:
+                        ((Producto) objTable).actualizarFoto2(objList);
+                        break;
+                    case 3:
+                        ((Producto) objTable).actualizarFoto3(objList);
+                        break;
+                    default:
+                        break;
+                }
+        }
+
+
+        objTable.cerrar();
     }
 
     private void InsertUpdateDataBase(FactoryTable.TABLA oTabla,WebService.Service oService,boolean bNueva) {
@@ -133,22 +227,30 @@ public class CargaInformacion extends Activity {
             objWService.OnLineCallWebService(oService);
         else
             objWService.OnLineCallWebService(oService,sdf.format(sFechaActualizacion));
-        objResult = objWService.readJSONToObject(WebService.Accion.INSERT);
+
+        if(bNueva)
+            objResult = objWService.readJSONToObject(WebService.Accion.ALL);
+        else
+            objResult = objWService.readJSONToObject(WebService.Accion.INSERT);
+
 
         objTable.abrirBaseDeDatos(this);
 
         for(int i=0;i<objResult.length;i++) {
             objList = objResult[i];
-            if(objList != null)
+            if(objList[0] != null)
                 objTable.insertar(objResult[i]);
         }
 
-        objResult = objWService.readJSONToObject(WebService.Accion.UPDATE);
+        if(!bNueva)
+        {
+            objResult = objWService.readJSONToObject(WebService.Accion.UPDATE);
 
-        for(int i=0;i<objResult.length;i++) {
-            objList = objResult[i];
-            if(objList != null)
-                objTable.actualizar(objResult[i]);
+            for (int i = 0; i < objResult.length; i++) {
+                objList = objResult[i];
+                if (objList[0] != null)
+                    objTable.actualizar(objResult[i]);
+            }
         }
 
         objTable.cerrar();

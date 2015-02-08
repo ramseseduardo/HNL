@@ -58,6 +58,11 @@ public class ProveedorSubCategoria implements ISQLControlador  {
                 + params[0].toString() + " AND " + DBhelper.PROVEEDORSUBCATEGORIA_ID_SUBCATEGORIA + " = " + params[1].toString() , null);
     }
 
+    public void deleteProveedor(Object[] params) {
+        database.delete(DBhelper.TABLE_PROVEEDORSUBCATEGORIA, DBhelper.PROVEEDORSUBCATEGORIA_ID_PROVEEDOR + "="
+                + params[0].toString(), null);
+    }
+
     @Override
     public int count()
     {
