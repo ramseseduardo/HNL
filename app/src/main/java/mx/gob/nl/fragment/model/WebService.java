@@ -239,7 +239,7 @@ public class WebService {
                 break;
             case FOTOS:
                 objResult[i][0] = setNull(jsonobject,"Id_Producto");
-                objResult[i][1] = setNull(jsonobject,"URL");
+                objResult[i][1] = setNull(jsonobject,"Url");
                 break;
             default:
                 break;

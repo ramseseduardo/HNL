@@ -109,7 +109,7 @@ public class CargaInformacion extends Activity {
         InsertUpdateDataBase(FactoryTable.TABLA.PROVEEDORES, WebService.Service.PROVEEDORES,bNueva);
         InsertUpdateDataBase(FactoryTable.TABLA.PRODUCTOS, WebService.Service.PRODUCTOS,bNueva);
         InsertUpdateProveedorSubCategoriaDataBase(bNueva);
-        //InsertUpdateFotoDataBase(bNueva);
+        InsertUpdateFotoDataBase(bNueva);
 
         objTable = FactoryTable.getSQLController(FactoryTable.TABLA.ACTUALIZACION);
 
@@ -127,7 +127,7 @@ public class CargaInformacion extends Activity {
         ISQLControlador objTable;
         Object[][] objResult;
         Object[] objList = new Object[1];
-        Object[] oInsert = new Object[2];
+        String[] oInsert = new String[2];
         objTable = FactoryTable.getSQLController(FactoryTable.TABLA.PROVEEDORSUBCATEGORIA);
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
@@ -149,11 +149,11 @@ public class CargaInformacion extends Activity {
         }
 
         for(int i=0;i<objResult.length;i++) {
-            oInsert[0] = objResult[i];
+            oInsert[0] = objResult[i].toString();
             objList = objResult[1];
             if(objList.length > 0 && objList[1] != null)
                 for(int x=0;x<objList.length;x++) {
-                    oInsert[1] = String.valueOf(objList[x]);
+                    oInsert[1] = objList[x].toString();
                     objTable.insertar(oInsert);
                 }
         }
@@ -169,8 +169,8 @@ public class CargaInformacion extends Activity {
         objTable = FactoryTable.getSQLController(FactoryTable.TABLA.PRODUCTOS);
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         int iCount = 0;
-        int iProducto = 0;
-        int iAntProducto = 0;
+        String sProducto = "";
+        String sAntProducto = "";
 
         WebService objWService = new WebService();
         if(bNueva)
@@ -184,11 +184,11 @@ public class CargaInformacion extends Activity {
         objTable.abrirBaseDeDatos(this);
 
         for(int i=0;i<objResult.length;i++) {
-            iProducto = Integer.getInteger(String.valueOf(objResult[i][0]));
+            sProducto = String.valueOf(objResult[i][0]);
 
-            if(iProducto != iAntProducto) {
+            if(!sProducto.equals(sAntProducto)) {
                 iCount = 1;
-                iAntProducto = iProducto;
+                sAntProducto = sProducto;
             }
             else
                 iCount++;
