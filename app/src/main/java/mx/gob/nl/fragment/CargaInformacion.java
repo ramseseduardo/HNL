@@ -143,14 +143,14 @@ public class CargaInformacion extends Activity {
         objTable.abrirBaseDeDatos(this);
 
         for(int i=0;i<objResult.length;i++) {
-            objList = objResult[i];
+            objList[0]= objResult[i][0];
             if(objList[0] != null)
                 ((ProveedorSubCategoria)objTable).deleteProveedor(objList);
         }
 
         for(int i=0;i<objResult.length;i++) {
-            oInsert[0] = objResult[i].toString();
-            objList = objResult[1];
+            oInsert[0] = ((String) objResult[i][0]);
+            objList = (Object[]) objResult[i][1];
             if(objList.length > 0 && objList[1] != null)
                 for(int x=0;x<objList.length;x++) {
                     oInsert[1] = objList[x].toString();
