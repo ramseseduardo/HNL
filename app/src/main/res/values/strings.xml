@@ -20,8 +20,8 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="action_example">Example action</string>
-    <string name="app_label">Search</string>
-    <string name="search_hint">Search items from ListView</string>
+    <string name="app_label">Búsqueda</string>
+    <string name="search_hint">Búsqueda de Proveedor</string>
 
 
 </resources>

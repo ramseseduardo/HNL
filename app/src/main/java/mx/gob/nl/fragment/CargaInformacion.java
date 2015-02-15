@@ -150,8 +150,8 @@ public class CargaInformacion extends Activity {
 
         for(int i=0;i<objResult.length;i++) {
             oInsert[0] = ((String) objResult[i][0]);
-            objList = (Object[]) objResult[i][1];
-            if(objList.length > 0 && objList[1] != null)
+            try{objList = (Object[]) objResult[i][1];}catch(Exception ex){objList = null;}
+            if(objList != null && objList.length > 0 && objList[0] != null)
                 for(int x=0;x<objList.length;x++) {
                     oInsert[1] = objList[x].toString();
                     objTable.insertar(oInsert);
