@@ -86,7 +86,9 @@ public class CustomAdapter extends BaseAdapter implements Filterable {
         }
 
         if(!getItem(position).getUrlFoto().isEmpty())
-         Picasso.with(mContext).load(getItem(position).getUrlFoto()).into(holder.logo);
+            Picasso.with(mContext).load(getItem(position).getUrlFoto()).into(holder.logo);
+        else
+            Picasso.with(mContext).load(mContext.getString(R.string.URLSinFoto)).into(holder.logo); 
 
         holder.name.setText(getItem(position).getName());
         holder.precentacion.setText(getItem(position).getPresentacion());

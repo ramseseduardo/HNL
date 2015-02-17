@@ -22,6 +22,7 @@
     <string name="action_example">Example action</string>
     <string name="app_label">Búsqueda</string>
     <string name="search_hint">Búsqueda de Proveedor</string>
+    <string name="URLSinFoto">http://hnl.desoftspaces.com/uploads/sin_foto.png</string>
 
 
 </resources>

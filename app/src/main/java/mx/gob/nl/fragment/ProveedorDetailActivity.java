@@ -157,7 +157,10 @@ public class ProveedorDetailActivity extends Activity {
                     sValores += "Municipio: " + String.valueOf(objCursor.getString(17));
                 ((TextView)findViewById(R.id.txtDetalle)).setText(sValores);
                 ImageView objView = (ImageView)findViewById(R.id.imageView);
-                Picasso.with(this).load(objCursor.getString(20)).into(objView);
+                if(!objCursor.getString(20).isEmpty())
+                    Picasso.with(this).load(objCursor.getString(20)).into(objView);
+                else
+                    Picasso.with(this).load(R.string.URLSinFoto).into(objView);
                 objCursor.moveToNext();
             }
 

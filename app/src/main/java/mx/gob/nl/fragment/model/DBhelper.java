@@ -81,7 +81,7 @@ public class DBhelper extends SQLiteOpenHelper {
 
     // información del a base de datos
     static final String DB_NAME = "HNL";
-    static final int DB_VERSION = 1;
+    static final int DB_VERSION = 2;
 
     // Información de la base de datos
     private static final String CREATE_ACTUALIZACION = "CREATE TABLE [Actualizacion] ([Id_Actualizacion] INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, [Fecha_Actualizacion] DATETIME, [ControlProveedor] INTEGER, [ControlProductos] INTEGER, [ControlConfiguracion] INTEGER, [TotalProveedor] INTEGER, [TotalProductos] INTEGER, [TotalConfiguracion] INTEGER, [Idioma] VARCHAR (30))";
