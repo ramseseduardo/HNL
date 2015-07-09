@@ -99,11 +99,24 @@ public class ArticuloDetailActivity extends Activity {
 
             while (!objCursor.isAfterLast()) {
                 ImageView objView1 = (ImageView)findViewById(R.id.imageView1);
-                Picasso.with(this).load(String.valueOf(objCursor.getString(7))).into(objView1);
+                if(!objCursor.getString(7).isEmpty())
+                    Picasso.with(this).load(String.valueOf(objCursor.getString(7))).into(objView1);
+                else
+                    Picasso.with(this).load(R.string.URLSinFoto).into(objView1);
+
                 ImageView objView2 = (ImageView)findViewById(R.id.imageView2);
-                Picasso.with(this).load(String.valueOf(objCursor.getString(8))).into(objView2);
+
+                if(!objCursor.getString(8).isEmpty())
+                    Picasso.with(this).load(String.valueOf(objCursor.getString(8))).into(objView2);
+                else
+                    Picasso.with(this).load(R.string.URLSinFoto).into(objView2);
+
                 ImageView objView3 = (ImageView)findViewById(R.id.imageView3);
-                Picasso.with(this).load(String.valueOf(objCursor.getString(9))).into(objView3);
+                if(!objCursor.getString(9).isEmpty())
+                    Picasso.with(this).load(String.valueOf(objCursor.getString(9))).into(objView3);
+                else
+                    Picasso.with(this).load(R.string.URLSinFoto).into(objView3);
+
                 objCursor.moveToNext();
             }
 
