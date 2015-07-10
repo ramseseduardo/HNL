@@ -17,6 +17,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.Locale;
 import java.util.Random;
 
 import mx.gob.nl.fragment.model.FactoryTable;
@@ -62,7 +63,7 @@ public class CargaInformacion extends Activity {
         Calendar currentDate = new GregorianCalendar();
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         java.util.Date dateTime = null;
-        DateFormat readFormat = new SimpleDateFormat( "EEE MMM d HH:mm:ss zzz yyyy");
+        DateFormat readFormat = new SimpleDateFormat( "EEE MMM d HH:mm:ss zzz yyyy", Locale.US);
 
         objTable = FactoryTable.getSQLController(FactoryTable.TABLA.ACTUALIZACION);
 
@@ -81,6 +82,7 @@ public class CargaInformacion extends Activity {
                 dateTime = readFormat.parse(objCursor.getString(1));
             } catch (ParseException e) {
                 e.printStackTrace();
+                return;
             }
             tabla.setTime(dateTime);
 
