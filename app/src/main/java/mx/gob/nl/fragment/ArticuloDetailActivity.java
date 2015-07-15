@@ -132,8 +132,13 @@ public class ArticuloDetailActivity extends Activity {
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        getIntent().putExtra(ArticuloDetailActivity.ARG_ITEM_ID,  String.valueOf(mItem.getId()));
+        getIntent().putExtra(ArticuloDetailActivity.ARG_ITEM_ID, String.valueOf(mItem.getId()));
         outState.putCharSequence(ArticuloDetailActivity.ARG_ITEM_ID, String.valueOf(mItem.getId()));
+
+        getIntent().putExtra(ArticuloDetailActivity.ARG_ARTICULO_ID, String.valueOf(ArticuloId));
+        outState.putCharSequence(ArticuloDetailActivity.ARG_ARTICULO_ID, String.valueOf(ArticuloId));
+
+
     }
 
     @Override

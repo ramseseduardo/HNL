@@ -30,6 +30,7 @@ import mx.gob.nl.fragment.model.WebService;
 public class CargaInformacion extends Activity {
 
     Calendar sFechaActualizacion = null;
+    boolean bCreado = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,15 +54,13 @@ public class CargaInformacion extends Activity {
         };
         Thread mythread = new Thread(runnable);
         mythread.start();
-
-
     }
 
     private void CargaBaseDatos() {
         ISQLControlador objTable;
         Calendar tabla = new GregorianCalendar();
         Calendar currentDate = new GregorianCalendar();
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.US);
         java.util.Date dateTime = null;
         DateFormat readFormat = new SimpleDateFormat( "EEE MMM d HH:mm:ss zzz yyyy", Locale.US);
 
@@ -106,7 +105,7 @@ public class CargaInformacion extends Activity {
         ISQLControlador objTable;
         Calendar currentDate = new GregorianCalendar();
 
-        InsertUpdateDataBase(FactoryTable.TABLA.CATEGORIA, WebService.Service.CATEGORIA,bNueva);
+        InsertUpdateDataBase(FactoryTable.TABLA.CATEGORIA, WebService.Service.CATEGORIA, bNueva);
         InsertUpdateDataBase(FactoryTable.TABLA.SUBCATEGORIA, WebService.Service.SUBCATEGORIA,bNueva);
         InsertUpdateDataBase(FactoryTable.TABLA.PROVEEDORES, WebService.Service.PROVEEDORES,bNueva);
         InsertUpdateDataBase(FactoryTable.TABLA.PRODUCTOS, WebService.Service.PRODUCTOS,bNueva);
@@ -131,13 +130,13 @@ public class CargaInformacion extends Activity {
         Object[] objList = new Object[1];
         String[] oInsert = new String[2];
         objTable = FactoryTable.getSQLController(FactoryTable.TABLA.PROVEEDORSUBCATEGORIA);
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
 
         WebService objWService = new WebService();
         if(bNueva)
             objWService.OnLineCallWebService( WebService.Service.PROVEEDORSUBCATEGORIA);
         else
-            objWService.OnLineCallWebService(WebService.Service.PROVEEDORSUBCATEGORIA,sdf.format(sFechaActualizacion));
+            objWService.OnLineCallWebService(WebService.Service.PROVEEDORSUBCATEGORIA,sdf.format(sFechaActualizacion.getTime()));
 
 
         objResult = objWService.readJSONToObject(WebService.Accion.ALL);
@@ -169,7 +168,7 @@ public class CargaInformacion extends Activity {
         Object[][] objResult;
         Object[] objList = new Object[1];
         objTable = FactoryTable.getSQLController(FactoryTable.TABLA.PRODUCTOS);
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
         int iCount = 0;
         String sProducto = "";
         String sAntProducto = "";
@@ -178,7 +177,7 @@ public class CargaInformacion extends Activity {
         if(bNueva)
             objWService.OnLineCallWebService( WebService.Service.FOTOS);
         else
-            objWService.OnLineCallWebService(WebService.Service.FOTOS,sdf.format(sFechaActualizacion));
+            objWService.OnLineCallWebService(WebService.Service.FOTOS,sdf.format(sFechaActualizacion.getTime()));
 
 
         objResult = objWService.readJSONToObject(WebService.Accion.ALL);
@@ -222,13 +221,13 @@ public class CargaInformacion extends Activity {
         Object[][] objResult;
         Object[] objList;
         objTable = FactoryTable.getSQLController(oTabla);
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
 
         WebService objWService = new WebService();
         if(bNueva)
             objWService.OnLineCallWebService(oService);
         else
-            objWService.OnLineCallWebService(oService,sdf.format(sFechaActualizacion));
+            objWService.OnLineCallWebService(oService,sdf.format(sFechaActualizacion.getTime()));
 
         if(bNueva)
             objResult = objWService.readJSONToObject(WebService.Accion.ALL);
@@ -453,6 +452,7 @@ public class CargaInformacion extends Activity {
             String string = bundle.getString("myKey");
             Intent objIntent = new Intent(CargaInformacion.this,ProveedorListActivity.class);
             startActivity(objIntent);
+            bCreado = true;
         }
     };
     @Override
@@ -461,6 +461,7 @@ public class CargaInformacion extends Activity {
         //getMenuInflater().inflate(R.menu.carga_informacion, menu);
         return true;
     }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
